@@ -192,7 +192,7 @@ client.on('interactionCreate', async interaction => {
     } catch (e) {
       console.error(`\x1b[31m[ERR]\x1b[0m /${interaction.commandName}: ${e.message}`);
       const { error } = require('./utils/embed');
-      const opts = { embeds: [error(client, 'Error', e.message)], flags: MessageFlags.Ephemeral };
+      const opts = withGuildContext(interaction.guild, () => ({ embeds: [error(client, 'Error', e.message)], flags: MessageFlags.Ephemeral }));
       (interaction.replied || interaction.deferred) ? interaction.followUp(opts) : interaction.reply(opts);
     }
   }
@@ -277,7 +277,8 @@ client.on('messageCreate', async message => {
     } catch (e) {
       console.error(`\x1b[31m[DM CMD ERR]\x1b[0m ?${commandName}: ${e.message}`);
       const { error } = require('./utils/embed');
-      message.reply({ embeds: [error(client, 'Error', e.message)] }).catch(() => null);
+      const embed = withGuildContext(null, () => error(client, 'Error', e.message));
+      message.reply({ embeds: [embed] }).catch(() => null);
     }
     return;
   }
@@ -455,7 +456,8 @@ client.on('messageCreate', async message => {
   } catch (e) {
     console.error(`\x1b[31m[ERR]\x1b[0m ${prefix}${cmdName}: ${e.message}`);
     const { error } = require('./utils/embed');
-    message.channel.send({ embeds: [error(client, 'Error', e.message)] }).catch(() => null);
+    const embed = withGuildContext(message.guild, () => error(client, 'Error', e.message));
+    message.channel.send({ embeds: [embed] }).catch(() => null);
   }
 });
 
