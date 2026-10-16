@@ -15,7 +15,7 @@
 
 Conquest is an independent community project. This repository contains the bot's application code and documentation. It does not include the running bot's credentials, live server/user data, hosting configuration, or backups.
 
-> 🧪 **v4.6.2 is in early-access preparation.** The DM-only `?earlyaccess` command records selected test servers for the team; adding a server does not message or change it. Experimental features must explicitly check the early-access registry before they affect a server.
+> 🧪 **v4.6.2 is in early-access testing.** The DM-only `?earlyaccess` command records selected test servers for the team; adding a server does not message or change it. Experimental features must explicitly check the early-access registry before they affect a server.
 
 ## ✨ What Conquest can do
 
