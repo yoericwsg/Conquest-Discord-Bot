@@ -37,12 +37,16 @@ function read(file, defaultValue = {}) {
     return JSON.parse(fs.readFileSync(filePath, 'utf8'));
   } catch (error) {
     if (error instanceof SyntaxError) {
-      const backupPath = `${filePath}.corrupt-${Date.now()}`;
-      try {
-        fs.copyFileSync(filePath, backupPath, fs.constants.COPYFILE_EXCL);
-        console.error(`[STORAGE] Invalid JSON in ${file}; preserved the original at ${path.basename(backupPath)}.`);
-      } catch (backupError) {
-        console.error(`[STORAGE] Invalid JSON in ${file}; unable to preserve a recovery copy: ${backupError.message}`);
+      const backupPrefix = `${path.basename(filePath)}.corrupt-`;
+      const alreadyPreserved = fs.readdirSync(DATA_DIR).some(name => name.startsWith(backupPrefix));
+      if (!alreadyPreserved) {
+        const backupPath = `${filePath}.corrupt-${Date.now()}`;
+        try {
+          fs.copyFileSync(filePath, backupPath, fs.constants.COPYFILE_EXCL);
+          console.error(`[STORAGE] Invalid JSON in ${file}; preserved the original at ${path.basename(backupPath)}.`);
+        } catch (backupError) {
+          console.error(`[STORAGE] Invalid JSON in ${file}; unable to preserve a recovery copy: ${backupError.message}`);
+        }
       }
     }
     return defaultValue;

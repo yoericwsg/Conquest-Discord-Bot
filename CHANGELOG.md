@@ -10,7 +10,7 @@
 - **− Fixed** command alias routing; `?flip` consistently flips a coin, while `?reversetext` reverses text.
 - **− Fixed** status and bot-info panels to report prefix and slash command counts separately.
 - **~ Improved** anti-raid verification recovery after temporary API failures and respect for manual changes.
-- **~ Improved** deployment safety by excluding local runtime records and shipping release notes as application content.
+- **~ Improved** deployment safety by excluding all local runtime data, including corrupt-file recovery copies, and shipping release notes as application content.
 - **~ Improved** setup, anti-raid, anti-spam, permissions, and data-handling documentation.
 - Early-access enrollment records a server only; it does not message or modify that server.
 

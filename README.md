@@ -114,7 +114,7 @@ The release-note embed marks additions with **+**, improvements with **~**, and 
 
 ## 🔐 Intents, AI, and data
 
-Conquest stores runtime settings and feature records as JSON under `data/` on the host. Depending on the features enabled, records may include server configuration, AFK state, leveling/economy progress, warnings, custom commands, and moderation/security settings. Snipe/edit-snipe message details are held in process memory. Never publish live `data/*.json` files.
+Conquest stores runtime settings and feature records under `data/` on the host. Depending on the features enabled, records may include server configuration, AFK state, leveling/economy progress, warnings, custom commands, moderation/security settings, and recovery copies of malformed records. Snipe/edit-snipe message details are held in process memory. Never publish the contents of `data/`.
 
 When AI mode is enabled in a channel, relevant message text and supported image input may be sent to the configured AI provider to generate a response. Check the provider's current terms and privacy settings before enabling AI. This repository does not define a hosting provider's logs, backups, location, or retention period; operators should disclose and configure those separately.
 
