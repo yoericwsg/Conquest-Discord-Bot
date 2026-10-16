@@ -12,7 +12,7 @@
 - **~ Improved** anti-raid verification recovery after temporary API failures and respect for manual changes.
 - **~ Improved** deployment safety by excluding all local runtime data, including corrupt-file recovery copies, and shipping release notes as application content.
 - **~ Improved** setup, anti-raid, anti-spam, permissions, and data-handling documentation.
-- Early-access enrollment records a server only; it does not message or modify that server.
+- **~ Clarified** that early-access enrollment records a server selection only; it does not message or modify that server.
 
 ## v4.6.1
 

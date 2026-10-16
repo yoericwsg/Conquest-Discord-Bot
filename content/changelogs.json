@@ -11,7 +11,8 @@
       "~ Corrected status and bot-info panels to report prefix and slash command counts separately instead of double-counting commands.",
       "~ Anti-raid verification now retries restoration after temporary API failures and respects manual verification changes.",
       "~ Improved deployment safety by keeping local runtime data and corrupt-file recovery copies out of Bot-Hosting deploys.",
-      "~ Expanded setup, anti-raid, anti-spam, permissions, and data-handling documentation."
+      "~ Expanded setup, anti-raid, anti-spam, permissions, and data-handling documentation.",
+      "~ Clarified that early-access enrollment records a server selection only; it does not message or modify that server."
     ]
   },
   {
