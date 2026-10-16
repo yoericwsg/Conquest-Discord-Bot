@@ -83,7 +83,7 @@ function info(client, title, fields = [], description = null) {
 }
 
 function profile(client, title, fields = [], description = null, thumbnail = null, color = COLORS.purple) {
-  const embed = base(client).setTitle(title).setColor(color);
+  const embed = base(client).setTitle(styleTitle(title)).setColor(color);
   if (description) embed.setDescription(description);
   if (fields.length) embed.addFields(fields);
   if (thumbnail) embed.setThumbnail(thumbnail);
