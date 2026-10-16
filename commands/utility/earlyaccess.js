@@ -6,9 +6,13 @@ const { base, error, success } = require('../../utils/embed');
 function renderList(client) {
   const entries = earlyAccess.getEarlyAccessGuilds()
     .filter(entry => entry.release === earlyAccess.RELEASE)
-    .sort((a, b) => a.guildName.localeCompare(b.guildName));
+    .sort((a, b) => String(a.guildName ?? a.guildId).localeCompare(String(b.guildName ?? b.guildId)));
   const description = entries.length
-    ? entries.map((entry, index) => `**${index + 1}. ${entry.guildName}**\nID: \`${entry.guildId}\` · Added <t:${Math.floor(entry.addedAt / 1000)}:R>`).join('\n\n')
+    ? entries.slice(0, 20).map((entry, index) => {
+      const name = String(entry.guildName ?? 'Unknown server').replace(/([\\`*_~|])/g, '\\$1').slice(0, 100);
+      const addedAt = Number.isFinite(entry.addedAt) ? Math.floor(entry.addedAt / 1000) : null;
+      return `**${index + 1}. ${name}**\nID: \`${entry.guildId}\`${addedAt ? ` · Added <t:${addedAt}:R>` : ''}`;
+    }).join('\n\n') + (entries.length > 20 ? `\n\n…and ${entries.length - 20} more. Use server IDs with remove to manage them.` : '')
     : 'No servers have been selected for the v4.6.2 early-access cohort yet.';
   return base(client).setTitle('🧪 Conquest v4.6.2 early access')
     .setDescription(description.slice(0, 4000))
@@ -34,7 +38,10 @@ module.exports = {
   async execute(source, args, client) {
     const isSlash = typeof source.isChatInputCommand === 'function' && source.isChatInputCommand();
     const actor = source.user ?? source.author;
-    const reply = payload => isSlash ? source.reply(payload) : source.channel.send(payload);
+    const reply = payload => {
+      const safePayload = { ...payload, allowedMentions: { parse: [] } };
+      return isSlash ? source.reply(safePayload) : source.channel.send(safePayload);
+    };
 
     if (source.guild) return reply({ content: 'Run this command in Conquest’s DMs.' });
     if (!await isApplicationOwner(client, actor.id)) {
@@ -66,11 +73,12 @@ module.exports = {
         `Conquest is not currently in server \`${guildId}\`. Add Conquest to that server first, then select it here.`)] });
     }
     const result = earlyAccess.addEarlyAccessGuild(guild, actor);
+    const safeName = String(guild.name).replace(/([\\`*_~|])/g, '\\$1').slice(0, 100);
     if (!result.added) {
       return reply({ embeds: [base(client).setTitle('🧪 Already selected')
-        .setDescription(`**${guild.name}** is already in the v4.6.2 early-access cohort.`)] });
+        .setDescription(`**${safeName}** is already in the v4.6.2 early-access cohort.`)] });
     }
     return reply({ embeds: [success(client, 'Server selected for testing',
-      `**${guild.name}** has been added to the v4.6.2 early-access cohort. This only records the selection; it does not send a message or change the server.`)] });
+      `**${safeName}** has been added to the v4.6.2 early-access cohort. This only records the selection; it does not send a message or change the server.`)] });
   },
 };
