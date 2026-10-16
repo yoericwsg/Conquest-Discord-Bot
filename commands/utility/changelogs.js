@@ -28,7 +28,7 @@ module.exports = {
     let releases;
     try { releases = JSON.parse(fs.readFileSync(path.join(__dirname, '../../content/changelogs.json'), 'utf8')); }
     catch { return sendText('The release-notes file could not be read.'); }
-    const requested = String((isSlash ? source.options.getString('release') : args[0]) ?? 'latest').toLowerCase();
+    const requested = String((isSlash ? source.options.getString('release') : args.join(' ')) ?? 'latest').trim().toLowerCase() || 'latest';
     const index = requested === 'latest' ? 0
       : requested === 'older' || requested === 'old' ? 1
         : releases.findIndex(release => release.version.toLowerCase() === requested.replace(/^v/, ''));
