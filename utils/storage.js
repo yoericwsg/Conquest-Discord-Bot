@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
+let temporaryWriteSequence = 0;
 
 fs.mkdirSync(DATA_DIR, { recursive: true });
 
@@ -19,7 +20,7 @@ function resolveDataPath(file) {
 }
 
 function writePathAtomically(filePath, data) {
-  const temporaryPath = `${filePath}.${process.pid}.${Date.now()}.tmp`;
+  const temporaryPath = `${filePath}.${process.pid}.${Date.now()}.${temporaryWriteSequence++}.tmp`;
   try {
     fs.writeFileSync(temporaryPath, `${JSON.stringify(data, null, 2)}\n`, { encoding: 'utf8', flag: 'wx' });
     fs.renameSync(temporaryPath, filePath);

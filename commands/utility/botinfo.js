@@ -36,7 +36,7 @@ module.exports = {
           ``,
           `🌐  **Servers:**      \`${client.guilds.cache.size}\``,
           `👥  **Users:**        \`${client.users.cache.size}\``,
-          `📋  **Commands:**     \`${client.commands.size + client.prefixCommands.size}\``,
+          `📋  **Commands:**     \`${client.prefixCommands.size} prefix · ${client.commands.size} slash\``,
         ]).setThumbnail(client.user.displayAvatarURL({ size: 256 })),
       ],
     });

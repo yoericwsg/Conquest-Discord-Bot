@@ -37,7 +37,7 @@ function buildStatusEmbed(client, intervalS) {
     ``,
     `🌐  **Servers:**      \`${client.guilds.cache.size}\``,
     `👥  **Users:**        \`${client.users.cache.size}\``,
-    `📋  **Commands:**     \`${client.commands.size + client.prefixCommands.size}\``,
+    `📋  **Commands:**     \`${client.prefixCommands.size} prefix · ${client.commands.size} slash\``,
   ];
   if (intervalS) lines.push(``, `🔁  **Auto-refresh:**  every \`${intervalS}s\` · <t:${Math.floor(Date.now() / 1000)}:R>`);
   const embed = panel(client, '📊  Bot Status', lines).setThumbnail(client.user.displayAvatarURL({ size: 256 }));
