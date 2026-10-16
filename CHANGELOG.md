@@ -4,6 +4,8 @@
 
 - **+ Added** a private owner/team command to manage the early-access test-server cohort.
 - **+ Added** `?installembedemoji` and `/installembedemoji` to install six clean, reusable embed emojis in a server.
+- **+ Added** an optional full embed-icon pack with 96 additional themed symbols; the installer respects each server's available emoji slots.
+- **~ Improved** custom embeds with Conquest branding, consistent timestamps, title emoji styling, and clearer text and color validation.
 - **+ Added** the owner/team-only `/changelogs` command in bot DMs alongside its prefix form.
 - **+ Added** clear `+` additions, `~` improvements, and `−` fixes to published changelogs; refreshed help details.
 - **~ Improved** runtime JSON writes with atomic replacement and recovery copies for malformed files.

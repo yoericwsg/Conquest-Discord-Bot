@@ -40,7 +40,7 @@ module.exports = {
     const lines = [
       `**Conquest ${require('../../config.json').version}** — Premium Discord Bot`,
       `Prefix: \`${pfx}\`  ·  Many commands also support \`/\` slash commands`,
-      '`serversin`, `checkservers`, `forcegeninvite`, `changelogs`, `antiraid`, `earlyaccess`, `bypassroleadd`, `announce`, `downtime`, and `downtimeby` are application-owner/team DM-only commands. `lockdown`, `cancellockdown`, and `lockdownmode` require server Administrator permissions. Lockdown requires a second confirmation, preserves channels and messages, and can be reversed with `?cancellockdown`. `?installembedemoji` installs Conquest’s clean server emoji set and requires Manage Expressions permission.',
+      '`serversin`, `checkservers`, `forcegeninvite`, `changelogs`, `antiraid`, `earlyaccess`, `bypassroleadd`, `announce`, `downtime`, and `downtimeby` are application-owner/team DM-only commands. `lockdown`, `cancellockdown`, and `lockdownmode` require server Administrator permissions. Lockdown requires a second confirmation, preserves channels and messages, and can be reversed with `?cancellockdown`. `?installembedemoji` installs the six-icon core set; use `?installembedemoji full` for the 102-symbol pack. Both require Manage Expressions permission and available emoji slots.',
       SEP,
     ];
 

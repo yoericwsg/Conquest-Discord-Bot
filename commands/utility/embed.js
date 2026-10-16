@@ -1,5 +1,5 @@
-const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder } = require('discord.js');
-const { error } = require('../../utils/embed');
+const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { error, base, styleTitle } = require('../../utils/embed');
 
 module.exports = {
   name: 'embed',
@@ -45,11 +45,19 @@ module.exports = {
       color = '#5865F2';
     }
 
+    const cleanDescription = typeof description === 'string' ? description.trim() : '';
+    const cleanTitle = typeof title === 'string' ? title.trim() : '';
+    if (!cleanDescription || cleanDescription.length > 4096 || cleanTitle.length > 256) {
+      return reply({ embeds: [error(client, 'Embed text is too long', 'Keep the description under 4,096 characters and the title under 256 characters.')] });
+    }
+    if (!/^#[0-9a-f]{6}$/i.test(color)) {
+      return reply({ embeds: [error(client, 'Invalid color', 'Use a six-digit hex color such as `#5865F2`.')] });
+    }
     if (imageUrl && (!/^https:\/\/\S+$/i.test(imageUrl) || imageUrl.length > 2048)) {
       return reply({ embeds: [error(client, 'Invalid image URL', 'Use a valid HTTPS image or GIF URL.')] });
     }
-    const embed = new EmbedBuilder().setDescription(description).setColor(color);
-    if (title) embed.setTitle(title);
+    const embed = base(client).setDescription(cleanDescription).setColor(color);
+    if (cleanTitle) embed.setTitle(styleTitle(cleanTitle));
     if (imageUrl) embed.setImage(imageUrl);
 
     if (isSlash) return reply({ embeds: [embed] });

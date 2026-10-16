@@ -113,4 +113,4 @@ function formatUptime(ms) {
   return `${d}d ${h % 24}h ${m % 60}m ${s % 60}s`;
 }
 
-module.exports = { base, success, error, warning, panel, info, profile, moderation, COLORS, withImage, progressBar, formatUptime, withGuildContext, resolveEmoji, SEP, FOOTER };
+module.exports = { base, success, error, warning, panel, info, profile, moderation, COLORS, withImage, progressBar, formatUptime, withGuildContext, resolveEmoji, styleTitle, SEP, FOOTER };
