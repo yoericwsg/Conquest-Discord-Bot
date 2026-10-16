@@ -3,11 +3,13 @@
 ## v4.6.2 Early Access (testing)
 
 - Added a private owner/team command to manage the early-access test-server cohort.
+- Added `?installembedemoji` and `/installembedemoji` to install six clean, reusable embed emojis in a server.
+- Updated published changelogs with clear `+` additions, `~` improvements, and `−` fixes; refreshed the help panel's command and permission details.
 - Made runtime JSON updates atomic and preserve a recovery copy when a data file is malformed.
-- Prevented command aliases from silently overriding another command; `?flip` now consistently flips a coin, and `?reversetext` reverses text.
-- Corrected status and bot-info panels to report prefix and slash command counts separately instead of double-counting commands.
-- Anti-raid verification now retries restoration after temporary API failures and respects manual verification changes.
-- Improved deployment safety by keeping local runtime JSON records out of Bot-Hosting deploys.
+- Fixed command alias routing; `?flip` consistently flips a coin, while `?reversetext` reverses text.
+- Corrected status and bot-info panels to report prefix and slash command counts separately.
+- Improved anti-raid verification recovery after temporary API failures and respect for manual changes.
+- Kept local runtime JSON records out of Bot-Hosting deploys and moved release notes into tracked application content.
 - Expanded setup, anti-raid, anti-spam, permissions, and data-handling documentation.
 - Early-access enrollment records a server only; it does not message or modify that server.
 

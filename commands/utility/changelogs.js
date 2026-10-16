@@ -30,7 +30,12 @@ module.exports = {
     const release = releases[index];
     const embed = base(client).setColor('#5865F2')
       .setTitle(`📋 Conquest ${release.version} changelog`)
-      .setDescription(release.notes.map(note => `• ${note}`).join('\n').slice(0, 3900))
+      .setDescription(release.notes.map(note => {
+        const text = String(note).trim();
+        const marker = /^([+~−-])\s+/.exec(text);
+        const sign = marker?.[1] === '~' ? '~' : marker && (marker[1] === '-' || marker[1] === '−') ? '−' : '+';
+        return `**${sign}** ${marker ? text.slice(marker[0].length) : text}`;
+      }).join('\n').slice(0, 3900))
       .setFooter({ text: `Released ${release.date} · posted by ${source.author.tag}` });
     const results = await broadcastEmbed(client, embed, `📋 **Conquest ${release.version} changelog**`);
     const sent = results.filter(result => result.sent).length;

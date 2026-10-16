@@ -7,6 +7,7 @@ const path = require('path');
 
 const cfg    = require('./config.json');
 const { getPrefix } = require('./utils/prefix');
+const { withGuildContext } = require('./utils/embed');
 const storage = require('./utils/storage');
 const customcmds = require('./systems/customcmds');
 const maintenance = require('./systems/maintenance');
@@ -187,7 +188,7 @@ client.on('interactionCreate', async interaction => {
 
     if (!(await handleCooldown(interaction, cmd))) return;
     try {
-      await cmd.execute(interaction, [], client);
+      await withGuildContext(interaction.guild, () => cmd.execute(interaction, [], client));
     } catch (e) {
       console.error(`\x1b[31m[ERR]\x1b[0m /${interaction.commandName}: ${e.message}`);
       const { error } = require('./utils/embed');
@@ -272,7 +273,7 @@ client.on('messageCreate', async message => {
     );
 
     try {
-      await command.execute(message, args, client);
+      await withGuildContext(null, () => command.execute(message, args, client));
     } catch (e) {
       console.error(`\x1b[31m[DM CMD ERR]\x1b[0m ?${commandName}: ${e.message}`);
       const { error } = require('./utils/embed');
@@ -450,7 +451,7 @@ client.on('messageCreate', async message => {
   if (!(await handleCooldown(message, cmd))) return;
 
   try {
-    await cmd.execute(message, args, client);
+    await withGuildContext(message.guild, () => cmd.execute(message, args, client));
   } catch (e) {
     console.error(`\x1b[31m[ERR]\x1b[0m ${prefix}${cmdName}: ${e.message}`);
     const { error } = require('./utils/embed');

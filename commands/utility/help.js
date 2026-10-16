@@ -6,7 +6,7 @@ const CATEGORIES = {
   '⚙️ Config':       ['prefix', 'setlog', 'setwelcome', 'setleave', 'autorole', 'setairole', 'setverify', 'setserverinvite', 'setemergencyroles'],
   '🔨 Moderation':   ['ban', 'kick', 'timeout', 'unban', 'purge', 'lock', 'unlock', 'slowmode', 'nick', 'softban', 'roleadd', 'roleremove', 'move'],
   '🤖 AI':           ['aimodeon', 'aimodeoff', 'chillmode', 'roastmode', 'casualmode', 'mathmode', 'englishmode', 'codemode', 'sciencemode', 'gfmode', 'buildmode', 'servermode', 'aimode reset'],
-  '🛠️ Utility':      ['ping', 'uptime', 'runservers', 'servers', 'botinfo', 'userinfo', 'serverinfo', 'serversin', 'checkservers', 'forcegeninvite', 'changelogs', 'antiraid', 'earlyaccess', 'bypassroleadd', 'announce', 'downtime', 'downtimeby', 'lockdown', 'cancellockdown', 'lockdownmode', 'ticketpanel', 'avatar', 'roleinfo', 'channelinfo', 'membercount', 'invite', 'poll', 'calc', 'createcmd', 'editcmd', 'deletecmd', 'listcmds', 'embed', 'password', 'reverse', 'emojis', 'timestamp', 'imgtogif', 'status', 'serverbuild'],
+  '🛠️ Utility':      ['ping', 'uptime', 'runservers', 'servers', 'botinfo', 'userinfo', 'serverinfo', 'serversin', 'checkservers', 'forcegeninvite', 'changelogs', 'antiraid', 'earlyaccess', 'bypassroleadd', 'announce', 'downtime', 'downtimeby', 'lockdown', 'cancellockdown', 'lockdownmode', 'ticketpanel', 'installembedemoji', 'avatar', 'roleinfo', 'channelinfo', 'membercount', 'invite', 'poll', 'calc', 'createcmd', 'editcmd', 'deletecmd', 'listcmds', 'embed', 'password', 'reversetext', 'emojis', 'timestamp', 'imgtogif', 'status', 'serverbuild'],
   '⭐ Leveling':     ['rank', 'leaderboard'],
   '💰 Economy':      ['balance', 'daily', 'work', 'shop', 'buy'],
   '🎲 Fun':          ['8ball', 'coinflip', 'meme', 'joke', 'rps', 'dice', 'choose', 'wyr', 'rate', 'hug', 'slap', 'truth', 'dare', 'howgay'],
@@ -40,7 +40,7 @@ module.exports = {
     const lines = [
       `**Conquest ${require('../../config.json').version}** — Premium Discord Bot`,
       `Prefix: \`${pfx}\`  ·  Many commands also support \`/\` slash commands`,
-      '`serversin`, `checkservers`, `forcegeninvite`, `changelogs`, `antiraid`, `earlyaccess`, `bypassroleadd`, `announce`, `downtime`, and `downtimeby` are application-owner/team DM-only commands. `lockdown`, `cancellockdown`, and `lockdownmode` require server Administrator permissions. Lockdown requires a second confirmation, preserves channels and messages, and can be reversed with `?cancellockdown`.',
+      '`serversin`, `checkservers`, `forcegeninvite`, `changelogs`, `antiraid`, `earlyaccess`, `bypassroleadd`, `announce`, `downtime`, and `downtimeby` are application-owner/team DM-only commands. `lockdown`, `cancellockdown`, and `lockdownmode` require server Administrator permissions. Lockdown requires a second confirmation, preserves channels and messages, and can be reversed with `?cancellockdown`. `?installembedemoji` installs Conquest’s clean server emoji set and requires Manage Expressions permission.',
       SEP,
     ];
 
@@ -52,7 +52,7 @@ module.exports = {
 
     lines.push(SEP);
     lines.push('Custom embeds support GIFs: `?embed Title | Description | https://...gif` or `/embed image_url:`.');
-    lines.push(`Total: **${Object.values(CATEGORIES).flat().length}** commands`);
+    lines.push(`Loaded: **${client.prefixCommands.size} prefix** · **${client.commands.size} slash** commands`);
     lines.push(`Use \`${pfx}<command>\` or \`/<command>\` to run any command.`);
 
     const embed = base(client)

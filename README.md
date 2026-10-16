@@ -63,6 +63,8 @@ Link the project folder to your deployment with `npx bot-hosting link <deploymen
 
 Invite Conquest, then use `?help` to browse commands. An administrator can configure logging with `?setlog #mod-log`, set welcome or verification options, create a ticket panel, and apply a starter layout with `?serverbuild community` (or `gaming`, `study`, `creator`). The bot needs the corresponding channel/role permissions for each feature. Review Discord's invite screen and grant additional permissions only when you enable those features.
 
+For server-local embed styling, an administrator with **Manage Expressions** can run `?installembedemoji` or `/installembedemoji`. It adds six Conquest emojis without replacing or deleting existing emojis. After installation, standard success, warning, and error embeds use the matching server emoji where available. The bot also needs **Create Expressions** or **Manage Expressions**.
+
 ## 🛡️ Anti-raid and anti-spam
 
 Anti-raid monitoring is enabled in **medium** mode by default. The application owner/team can inspect or change this global setting in a bot DM with `?antiraid` or `?antiraid high`:
