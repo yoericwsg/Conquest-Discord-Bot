@@ -22,9 +22,8 @@ module.exports = {
       : requested === 'older' || requested === 'old' ? 1
         : releases.findIndex(release => release.version.toLowerCase() === requested.replace(/^v/, ''));
     if (index < 0 || index >= releases.length) {
-      return source.reply(index === 1
-        ? 'No older release notes are stored in the project yet; only the current v4.6.1 changelog is available.'
-        : 'Choose `latest`, `older`, or a stored version such as `4.6.1`.');
+      const versions = releases.map(release => `\`${release.version}\``).join(', ');
+      return source.reply(`No stored release matches \`${requested}\`. Choose \`latest\`, \`older\`, or a version${versions ? `: ${versions}` : '.'}`);
     }
 
     const release = releases[index];
