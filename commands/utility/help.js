@@ -1,0 +1,64 @@
+const { SlashCommandBuilder } = require('discord.js');
+const { panel, base, SEP } = require('../../utils/embed');
+const { getPrefix } = require('../../utils/prefix');
+
+const CATEGORIES = {
+  '⚙️ Config':       ['prefix', 'setlog', 'setwelcome', 'setleave', 'autorole', 'setairole', 'setverify', 'setserverinvite', 'setemergencyroles'],
+  '🔨 Moderation':   ['ban', 'kick', 'timeout', 'unban', 'purge', 'lock', 'unlock', 'slowmode', 'nick', 'softban', 'roleadd', 'roleremove', 'move'],
+  '🤖 AI':           ['aimodeon', 'aimodeoff', 'chillmode', 'roastmode', 'casualmode', 'mathmode', 'englishmode', 'codemode', 'sciencemode', 'gfmode', 'buildmode', 'servermode', 'aimode reset'],
+  '🛠️ Utility':      ['ping', 'uptime', 'runservers', 'servers', 'botinfo', 'userinfo', 'serverinfo', 'serversin', 'checkservers', 'forcegeninvite', 'changelogs', 'antiraid', 'bypassroleadd', 'announce', 'downtime', 'downtimeby', 'lockdown', 'cancellockdown', 'lockdownmode', 'ticketpanel', 'avatar', 'roleinfo', 'channelinfo', 'membercount', 'invite', 'poll', 'calc', 'createcmd', 'editcmd', 'deletecmd', 'listcmds', 'embed', 'password', 'reverse', 'emojis', 'timestamp', 'imgtogif', 'status', 'serverbuild'],
+  '⭐ Leveling':     ['rank', 'leaderboard'],
+  '💰 Economy':      ['balance', 'daily', 'work', 'shop', 'buy'],
+  '🎲 Fun':          ['8ball', 'coinflip', 'meme', 'joke', 'rps', 'dice', 'choose', 'wyr', 'rate', 'hug', 'slap', 'truth', 'dare', 'howgay'],
+  '🎫 Tickets':      ['ticketpanel (admin setup)'],
+  '💾 Backup':       ['backup', 'restore'],
+};
+
+module.exports = {
+  name: 'help',
+  description: 'Show all commands',
+  aliases: ['h', 'commands', 'cmds'],
+  cooldown: 5,
+  slash: {
+    data: new SlashCommandBuilder()
+      .setName('help')
+      .setDescription('Show all Conquest commands')
+      .addStringOption(o => o.setName('category').setDescription('Category to view').addChoices(
+        { name: 'Config', value: 'config' },
+        { name: 'Moderation', value: 'moderation' },
+        { name: 'Utility', value: 'utility' },
+        { name: 'Fun', value: 'fun' },
+        { name: 'Economy', value: 'economy' },
+        { name: 'Leveling', value: 'leveling' },
+      )),
+  },
+  async execute(source, args, client) {
+    const isSlash = typeof source.isChatInputCommand === 'function' && source.isChatInputCommand();
+    const reply   = opts => isSlash ? source.reply(opts) : source.channel.send(opts);
+    const pfx     = getPrefix(source.guild?.id);
+
+    const lines = [
+      `**Conquest ${require('../../config.json').version}** — Premium Discord Bot`,
+      `Prefix: \`${pfx}\`  ·  Many commands also support \`/\` slash commands`,
+      '`serversin`, `checkservers`, `forcegeninvite`, `changelogs`, `antiraid`, `bypassroleadd`, `announce`, `downtime`, and `downtimeby` are application-owner/team DM-only commands. `lockdown`, `cancellockdown`, and `lockdownmode` require server Administrator permissions. Lockdown requires a second confirmation, preserves channels and messages, and can be reversed with `?cancellockdown`.',
+      SEP,
+    ];
+
+    for (const [cat, cmds] of Object.entries(CATEGORIES)) {
+      lines.push(`${cat}`);
+      lines.push(cmds.map(c => `\`${c}\``).join(', '));
+      lines.push('');
+    }
+
+    lines.push(SEP);
+    lines.push('Custom embeds support GIFs: `?embed Title | Description | https://...gif` or `/embed image_url:`.');
+    lines.push(`Total: **${Object.values(CATEGORIES).flat().length}** commands`);
+    lines.push(`Use \`${pfx}<command>\` or \`/<command>\` to run any command.`);
+
+    const embed = base(client)
+      .setTitle('📖  Conquest Help')
+      .setDescription(lines.join('\n'));
+
+    await reply({ embeds: [embed] });
+  },
+};

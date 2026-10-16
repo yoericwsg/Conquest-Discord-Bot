@@ -1,0 +1,25 @@
+{
+  "version": "v4.6.1",
+  "defaultPrefix": "?",
+  "embedColor": "#5865F2",
+  "successColor": "#57F287",
+  "errorColor": "#ED4245",
+  "warningColor": "#FEE75C",
+  "economy": {
+    "dailyReward": 200,
+    "workMin": 50,
+    "workMax": 250,
+    "currency": "💰",
+    "shop": [
+      { "id": "vip", "name": "VIP Role", "price": 5000, "description": "Exclusive VIP status" },
+      { "id": "lucky_coin", "name": "Lucky Coin", "price": 300, "description": "+10% daily bonus" },
+      { "id": "shield", "name": "Shield", "price": 1000, "description": "Protects from robbery" },
+      { "id": "boost", "name": "XP Boost", "price": 800, "description": "2× XP for 1 hour" }
+    ]
+  },
+  "leveling": {
+    "xpPerMessage": 15,
+    "xpCooldown": 60,
+    "xpVariance": 10
+  }
+}
