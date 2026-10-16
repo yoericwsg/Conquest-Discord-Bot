@@ -106,7 +106,7 @@ Conquest must already be in the selected server. This records the server for the
 | `?announce <serverID> <reason>` | Owner/team DM: announce to a selected server |
 | `?downtime 1hr <reason>` | Owner/team DM: post a temporary maintenance notice |
 | `?installembedemoji` / `/installembedemoji` | Install the server's Conquest embed emoji set (Manage Expressions required) |
-| `?changelogs latest` / `?changelogs older` | Owner/team DM: broadcast the latest or previous release notes |
+| `?changelogs latest` / `?changelogs older` or `/changelogs` | Owner/team DM: broadcast the latest or previous release notes |
 
 Commands with cross-server reach are restricted to the verified application owner/team and run in bot DMs. Server moderation and configuration commands also check Discord permissions.
 

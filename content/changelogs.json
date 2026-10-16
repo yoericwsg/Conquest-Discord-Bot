@@ -5,6 +5,7 @@
     "notes": [
       "+ Introduced an owner/team-managed early-access cohort for selected Conquest test servers.",
       "+ Added ?installembedemoji and /installembedemoji to install six clean, reusable embed emojis in a server.",
+      "+ Added the owner/team-only /changelogs command in bot DMs, alongside its prefix form.",
       "~ Made runtime JSON updates atomic and preserve a recovery copy when a data file is malformed.",
       "- Prevented command aliases from silently overriding another command; ?flip now consistently flips a coin and ?reversetext reverses text.",
       "~ Corrected status and bot-info panels to report prefix and slash command counts separately instead of double-counting commands.",
