@@ -1,8 +1,11 @@
 # Changelog
 
-## v4.6.2 Early Access (in preparation)
+## v4.6.2 Early Access (testing)
 
 - Added a private owner/team command to manage the early-access test-server cohort.
+- Made runtime JSON updates atomic and preserve a recovery copy when a data file is malformed.
+- Prevented command aliases from silently overriding another command; `?flip` now consistently flips a coin, and `?reversetext` reverses text.
+- Anti-raid verification now retries restoration after temporary API failures and respects manual verification changes.
 - Improved deployment safety by keeping local runtime JSON records out of Bot-Hosting deploys.
 - Expanded setup, anti-raid, anti-spam, permissions, and data-handling documentation.
 - Early-access enrollment records a server only; it does not message or modify that server.

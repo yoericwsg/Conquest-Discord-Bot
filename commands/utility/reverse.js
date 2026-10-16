@@ -4,7 +4,7 @@ const { error } = require('../../utils/embed');
 module.exports = {
   name: 'reverse',
   description: 'Reverse a piece of text',
-  aliases: ['flip'],
+  aliases: ['reversetext'],
   cooldown: 3,
   slash: {
     data: new SlashCommandBuilder()

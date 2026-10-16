@@ -15,7 +15,7 @@ module.exports = {
       return source.reply('This command is restricted to the verified Conquest owner/team.');
 
     let releases;
-    try { releases = JSON.parse(fs.readFileSync(path.join(__dirname, '../../data/changelogs.json'), 'utf8')); }
+    try { releases = JSON.parse(fs.readFileSync(path.join(__dirname, '../../content/changelogs.json'), 'utf8')); }
     catch { return source.reply('The release-notes file could not be read.'); }
     const requested = String(args[0] ?? 'latest').toLowerCase();
     const index = requested === 'latest' ? 0

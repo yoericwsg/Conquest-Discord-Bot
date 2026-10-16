@@ -63,8 +63,17 @@ function loadCommands() {
           client.slashPayloads.push(cmd.slash.data.toJSON());
         }
         if (cmd.name) {
+          if (client.prefixCommands.has(cmd.name)) {
+            throw new Error(`Duplicate prefix command name: ${cmd.name}`);
+          }
           client.prefixCommands.set(cmd.name, cmd);
-          (cmd.aliases || []).forEach(a => client.aliases.set(a, cmd.name));
+          (cmd.aliases || []).forEach(alias => {
+            if (client.prefixCommands.has(alias) || client.aliases.has(alias)) {
+              console.error(`\x1b[33m[ALIAS COLLISION]\x1b[0m ${cat}/${label}: "${alias}" is already registered; keeping the existing command route.`);
+              return;
+            }
+            client.aliases.set(alias, cmd.name);
+          });
         }
         const label = cmd.name ?? cmd.slash?.data?.name ?? file;
         console.log(`\x1b[32m[CMD]\x1b[0m ${cat}/${label}`);

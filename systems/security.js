@@ -59,22 +59,24 @@ async function raiseVerificationTemporarily(guild, client) {
   }
 }
 
-function scheduleVerificationRestore(guild, record) {
+function scheduleVerificationRestore(guild, record, delayOverride = null) {
   const previousTimer = verificationRestoreTimers.get(guild.id);
   if (previousTimer) clearTimeout(previousTimer);
-  const delay = Math.max(0, record.restoreAt - Date.now());
+  const delay = delayOverride ?? Math.max(0, record.restoreAt - Date.now());
   const timer = setTimeout(async () => {
     verificationRestoreTimers.delete(guild.id);
     const latest = storage.get(VERIFICATION_FILE, guild.id, null);
     if (!latest || latest.restoreAt !== record.restoreAt) return;
     try {
+      // If a moderator changed verification manually, respect that newer setting.
       if (guild.verificationLevel === VerificationLevel.VeryHigh) {
         await guild.setVerificationLevel(latest.previousLevel, 'Anti-raid temporary verification expired');
       }
+      storage.set(VERIFICATION_FILE, guild.id, null);
     } catch (error) {
       console.error(`[ANTI-RAID] Could not restore verification in ${guild.id}: ${error.message}`);
-    } finally {
-      storage.set(VERIFICATION_FILE, guild.id, null);
+      // Keep the recovery record and retry instead of leaving a guild at Very High forever.
+      scheduleVerificationRestore(guild, latest, 30_000);
     }
   }, delay);
   timer.unref?.();
@@ -86,10 +88,7 @@ function recoverVerification(client) {
     const record = storage.get(VERIFICATION_FILE, guild.id, null);
     if (!record || typeof record.restoreAt !== 'number') continue;
     if (record.restoreAt <= Date.now()) {
-      if (guild.verificationLevel === VerificationLevel.VeryHigh) {
-        guild.setVerificationLevel(record.previousLevel, 'Restore expired anti-raid verification').catch(() => null);
-      }
-      storage.set(VERIFICATION_FILE, guild.id, null);
+      scheduleVerificationRestore(guild, record);
     } else scheduleVerificationRestore(guild, record);
   }
 }
