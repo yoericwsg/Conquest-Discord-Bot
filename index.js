@@ -244,7 +244,7 @@ client.on('messageCreate', async message => {
     if (!message.content.startsWith(dmPrefix)) return;
     const [rawCommand, ...args] = message.content.slice(dmPrefix.length).trim().split(/\s+/);
     const commandName = String(rawCommand ?? '').toLowerCase();
-    if (!['serversin', 'bypassroleadd', 'downtime', 'down', 'downtimeby', 'announce', 'ann', 'broadcast', 'checkservers', 'forcegeninvite', 'changelogs', 'changelog', 'release', 'antiraid'].includes(commandName)) return;
+    if (!['serversin', 'bypassroleadd', 'downtime', 'down', 'downtimeby', 'announce', 'ann', 'broadcast', 'checkservers', 'forcegeninvite', 'changelogs', 'changelog', 'release', 'antiraid', 'earlyaccess', 'earlyacsess'].includes(commandName)) return;
 
     const commandKey = client.aliases.get(commandName) ?? commandName;
     const command = client.prefixCommands.get(commandKey);
