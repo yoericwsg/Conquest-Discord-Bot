@@ -13,7 +13,7 @@
 
 </div>
 
-Conquest is an independent community project. This repository contains the bot's application code and documentation. It does not include the running bot's credentials, live server/user data, hosting configuration, or backups.
+Conquest is an independent community project. This repository is the **public source snapshot**: you can inspect it, fork it, modify it, and run your own separate bot instance under the MIT license. Cloning this repository does **not** give you access to Conquest's hosted bot, its Discord account, private team tools, production credentials, live server/user data, hosting configuration, or backups. A self-hosted copy is your own deployment and must use a bot application and token that you control.
 
 > 🧪 **v4.6.2 is in early-access testing.** The DM-only `?earlyaccess` command records selected test servers for the team; adding a server does not message or change it. Experimental features must explicitly check the early-access registry before they affect a server.
 
@@ -35,9 +35,11 @@ Create an application and bot in the [Discord Developer Portal](https://discord.
 
 In **Bot → Privileged Gateway Intents**, enable **Server Members Intent** for join, leave, welcome, and member features. Enable **Message Content Intent** for `?` prefix commands, AFK, message utilities, and configured AI channels. Keep those intents off if you do not use the related features.
 
-### 3. Install and configure
+### 3. Download the source and install dependencies
 
-Use Node.js 22 or newer, then:
+You can **clone** the repository to make a local working copy, or use GitHub's **Fork** button to create your own GitHub copy. A fork tracks your changes separately; it does not connect to or control the official Conquest bot.
+
+Install [Git](https://git-scm.com/downloads) and [Node.js 22 or newer](https://nodejs.org/) first. Then run:
 
 ```sh
 git clone https://github.com/yoericwsg/Conquest-Discord-Bot.git
@@ -45,7 +47,20 @@ cd Conquest-Discord-Bot
 npm install
 ```
 
-Copy `.env.example` to `.env` and set `DISCORD_TOKEN`. Add `GROQ_API_KEY` only if you want to use the Groq-backed AI features. Keep `.env` private.
+Create your private environment file from the example. On Windows PowerShell:
+
+```powershell
+Copy-Item .env.example .env
+notepad .env
+```
+
+On macOS or Linux:
+
+```sh
+cp .env.example .env
+```
+
+Set `DISCORD_TOKEN` to the token for **your own** Discord bot application. `GROQ_API_KEY` is optional and only needed for Groq-backed AI features. Set `SESSION_SECRET` to a long, randomly generated private value if you use features that rely on it. Never paste secrets into issues, commits, screenshots, or chat. `.env` is excluded by `.gitignore`; `.env.example` is safe to commit because its values are placeholders.
 
 ### 4. Start Conquest
 
@@ -64,6 +79,79 @@ Link the project folder to your deployment with `npx bot-hosting link <deploymen
 Invite Conquest, then use `?help` to browse commands. An administrator can configure logging with `?setlog #mod-log`, set welcome or verification options, create a ticket panel, and apply a starter layout with `?serverbuild community` (or `gaming`, `study`, `creator`). The bot needs the corresponding channel/role permissions for each feature. Review Discord's invite screen and grant additional permissions only when you enable those features.
 
 For server-local embed styling, an administrator with **Manage Expressions** can run `?installembedemoji` or `/installembedemoji`. It adds six Conquest emojis without replacing or deleting existing emojis. After installation, standard success, warning, and error embeds use the matching server emoji where available. The bot also needs **Create Expressions** or **Manage Expressions**.
+
+### 7. First-run checklist
+
+1. Confirm the bot is online in the Discord Developer Portal and the terminal shows a successful login.
+2. Invite it to a test server using the `bot` and `applications.commands` scopes. Begin with only the permissions needed for the features you plan to try. Add permissions such as Manage Messages, Manage Roles, Manage Channels, or Moderate Members only when needed, and only after reviewing the code paths that use them.
+3. Enable **Message Content Intent** if you want `?` prefix commands. Enable **Server Members Intent** if you want member join/leave and welcome features. Some privileged intents may require approval for larger Discord applications.
+4. In the test server, run `?help`, then configure logging and welcome features before enabling moderation automation. Test destructive or server-wide actions in a private test server first.
+5. Keep the process running in a reliable host if you want the bot online continuously. `npm start` in a local terminal stops when that terminal or computer stops.
+
+### Common setup problems
+
+- **`Used disallowed intents`**: enable the matching privileged intent in the Developer Portal, then restart the bot.
+- **Prefix commands do not respond**: enable Message Content Intent, check the `?` prefix, and confirm the bot can view the channel and send messages.
+- **Slash commands do not appear immediately**: global command registration can take time. Confirm the invite included `applications.commands`, then restart once and check again.
+- **Missing access / missing permissions**: check the bot role position and channel-specific overwrites. Grant only the permission required by the specific feature.
+- **AI replies fail**: AI is optional. Check `GROQ_API_KEY` and provider availability, or leave AI disabled and use the rest of the bot.
+- **Bot exits after launch**: read the first error in the terminal, confirm Node.js is version 22+, run `npm install` again, and verify the environment variable names. Do not share the token when asking for help.
+
+### Run tests and inspect changes
+
+Install dependencies with `npm install`, then run the project test suite with:
+
+```sh
+npm test
+```
+
+Review the source and the current [release notes](CHANGELOG.md) before enabling features in a production server. The public source snapshot can differ from the separately hosted Conquest service; do not assume a feature is active in the official bot just because it exists in this repository.
+
+## 🧩 What “open source” means here
+
+- **You can:** read and audit the files published here, fork the repository, make changes, run a separate instance, and redistribute it under the [MIT license](LICENSE), while following that license and applicable law.
+- **You do not receive:** the official bot's token, access to the official bot account, team authorization, hosted runtime, production configuration, private records, or a guarantee that every public-source feature is deployed on the official service.
+- **You are responsible for your copy:** create and secure your own Discord application, configure permissions and intents, protect your secrets, review data handling, and keep dependencies and code updated.
+- **Branding and identity:** the MIT license covers the code, not ownership of the Conquest name, logos, artwork, or the official Discord bot identity. Do not impersonate the official service or imply endorsement. Clearly label modified deployments as independent forks.
+- **Public vs private:** this repository is the material intentionally published for inspection and reuse. Production secrets, live server data, backups, and hosting credentials are not part of it. Do not commit runtime `data/`, logs, backups, `.env`, or tokens.
+
+## 🗂️ Repository map
+
+| Path | What it contains |
+| --- | --- |
+| `index.js` | Bot startup, event wiring, and command registration |
+| `commands/` | Prefix and slash command implementations, organized by feature |
+| `systems/` | Shared moderation, safety, storage, logging, setup, and integration systems |
+| `utils/` | Reusable helpers |
+| `content/` | Public static content such as release notes |
+| `data/` | Runtime data location; generated records are ignored by Git |
+| `*.test.js` under `systems/` | Automated tests run by `npm test` |
+| `.env.example` | Placeholder names for local secrets and optional integrations |
+
+A fork does not inherit official production data or deployment settings. Review `config.json` and the relevant command/system code before running a modified copy.
+
+## 🔄 Updating your fork
+
+To get newer upstream source into a clone that has no local changes:
+
+```sh
+git pull --ff-only origin main
+npm install
+npm test
+npm start
+```
+
+If you have made local changes, commit or back them up before pulling, then merge/rebase deliberately and resolve conflicts. Read the release notes for migration notes before updating a long-running instance.
+
+## ❓ FAQ
+
+**Can I run the code without operating a Discord bot?** Yes. You can read and modify the source without creating an application. To connect it to Discord, you need a bot application and token that you control.
+
+**Does cloning this repo add my server to the official Conquest bot?** No. It creates a copy of the source. Your server joins an instance only when you invite that instance's bot account.
+
+**Can I publish a modified copy?** The source is MIT licensed. Preserve the license and copyright notice, make clear that your deployment is an independent fork, and do not publish credentials or private data. The license does not grant rights to Conquest branding or Discord account access.
+
+**Where do I report a bug or security issue?** Use GitHub Issues for ordinary reproducible bugs and feature requests. Follow [SECURITY.md](SECURITY.md) to report vulnerabilities privately; do not post exploit details or secrets publicly.
 
 ## 🛡️ Anti-raid and anti-spam
 
