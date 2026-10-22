@@ -5,8 +5,8 @@ const { getPrefix } = require('../../utils/prefix');
 const CATEGORIES = {
   '⚙️ Config':       ['prefix', 'setlog', 'setwelcome', 'setleave', 'autorole', 'setairole', 'setverify', 'setserverinvite', 'setemergencyroles'],
   '🔨 Moderation':   ['ban', 'kick', 'timeout', 'unban', 'purge', 'lock', 'unlock', 'slowmode', 'nick', 'softban', 'roleadd', 'roleremove', 'move'],
-  '🤖 AI':           ['aimodeon', 'aimodeoff', 'chillmode', 'roastmode', 'casualmode', 'mathmode', 'englishmode', 'codemode', 'sciencemode', 'gfmode', 'buildmode', 'servermode', 'aimode reset'],
-  '🛠️ Utility':      ['ping', 'uptime', 'runservers', 'servers', 'botinfo', 'userinfo', 'serverinfo', 'serversin', 'checkservers', 'forcegeninvite', 'changelogs', 'antiraid', 'earlyaccess', 'bypassroleadd', 'announce', 'downtime', 'downtimeby', 'lockdown', 'cancellockdown', 'lockdownmode', 'ticketpanel', 'installembedemoji', 'avatar', 'roleinfo', 'channelinfo', 'membercount', 'invite', 'poll', 'calc', 'createcmd', 'editcmd', 'deletecmd', 'listcmds', 'embed', 'password', 'reversetext (/reverse)', 'emojis', 'timestamp', 'imgtogif', 'status', 'serverbuild'],
+  '🧠 Optional AI':   ['aimodeon', 'aimodeoff', 'chillmode', 'roastmode', 'casualmode', 'mathmode', 'englishmode', 'codemode', 'sciencemode', 'gfmode', 'buildmode', 'servermode', 'aimode reset'],
+  '🛠️ Utility':      ['ping', 'uptime', 'runservers', 'servers', 'botinfo', 'userinfo', 'serverinfo', 'serversin', 'checkservers', 'forcegeninvite', 'changelogs', 'antiraid', 'earlyaccess', 'bypassroleadd', 'announce', 'downtime', 'downtimeby', 'lockdown', 'cancellockdown', 'lockdownmode', 'ticketpanel', 'installembedemoji', 'avatar', 'roleinfo', 'channelinfo', 'membercount', 'invite', 'poll', 'calc', 'createcmd', 'editcmd', 'deletecmd', 'listcmds', 'embed', 'password', 'reversetext (/reverse)', 'emojis', 'timestamp', 'imgtogif', 'status', 'templates', 'serverbuild', 'verifyoff'],
   '⭐ Leveling':     ['rank', 'leaderboard'],
   '💰 Economy':      ['balance', 'daily', 'work', 'shop', 'buy'],
   '🎲 Fun':          ['8ball', 'coinflip', 'meme', 'joke', 'rps', 'dice', 'choose', 'wyr', 'rate', 'hug', 'slap', 'truth', 'dare', 'howgay'],
@@ -38,7 +38,7 @@ module.exports = {
     const pfx     = getPrefix(source.guild?.id);
 
     const lines = [
-      `**Conquest ${require('../../config.json').version}** — Premium Discord Bot`,
+      `**Conquest ${require('../../config.json').version}** — Discord moderation and community tools`,
       `Prefix: \`${pfx}\`  ·  Many commands also support \`/\` slash commands`,
       '`serversin`, `checkservers`, `forcegeninvite`, `changelogs`, `antiraid`, `earlyaccess`, `bypassroleadd`, `announce`, `downtime`, and `downtimeby` are application-owner/team DM-only commands. `lockdown`, `cancellockdown`, and `lockdownmode` require server Administrator permissions. Lockdown requires a second confirmation, preserves channels and messages, and can be reversed with `?cancellockdown`. `?installembedemoji` installs the six-icon core set; use `?installembedemoji full` for the 102-symbol pack. Both require Manage Expressions permission and available emoji slots.',
       SEP,
@@ -62,3 +62,4 @@ module.exports = {
     await reply({ embeds: [embed] });
   },
 };
+
