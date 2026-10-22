@@ -27,6 +27,17 @@ Conquest is an independent community project. This repository is the **public so
 
 ## Install your own instance
 
+### Quick start
+
+For the shortest local setup, use Node.js 22 or newer, create a Discord application, add its token to `.env`, and run:
+
+```sh
+npm install
+npm start
+```
+
+The default prefix is `?`. Run `?help` in a server after inviting the bot. Slash commands are registered globally at startup and can take a few minutes to appear.
+
 ### 1. Create the Discord application
 
 Create an application and bot in the [Discord Developer Portal](https://discord.com/developers/applications). Copy the bot token into a private environment variable; never commit or share it. Start with the `bot` and `applications.commands` OAuth scopes and grant only the permissions needed for the features you enable. The bot's `?invite` command can generate a least-privilege invite for an already running instance.
@@ -72,7 +83,15 @@ At startup, Conquest loads prefix and slash commands and registers slash command
 
 ### 5. Deploy with Bot-Hosting
 
-Link the project folder to your deployment with `npx bot-hosting link <deployment-id>`. Set `DISCORD_TOKEN` in the host's private environment settings, then run `npx bot-hosting deploy`. To deploy on each save, use `npx bot-hosting deploy --watch`. Check output with `npx bot-hosting logs -n 100`.
+From the project folder, sign in once, link the deployment, add `DISCORD_TOKEN` in the host's private environment settings, and deploy:
+
+```sh
+npx bot-hosting login
+npx bot-hosting link <deployment-id>
+npx bot-hosting deploy
+```
+
+Use `npx bot-hosting deploy --watch` while developing. Check the latest output with `npx bot-hosting logs -n 100`. Keep the token in the host's environment settings; do not put it in a command, commit, or README.
 
 ### 6. Invite the bot to a test server
 
@@ -100,6 +119,18 @@ For server-local embed styling, an administrator with **Manage Expressions** can
 - **Missing access / missing permissions**: check the bot role position and channel-specific overwrites. Grant only the permission required by the specific feature.
 - **AI replies fail**: AI is optional. Check `GROQ_API_KEY` and provider availability, or leave AI disabled and use the rest of the bot.
 - **Bot exits after launch**: read the first error in the terminal, confirm Node.js is version 22+, run `npm install` again, and verify the environment variable names. Do not share the token when asking for help.
+
+### Permissions by feature
+
+| Feature | Main Discord permissions | Extra intent |
+| --- | --- | --- |
+| Prefix commands | View Channel, Send Messages, Embed Links | Message Content |
+| Welcome, leave, autorole | Send Messages, Embed Links, Manage Roles | Server Members |
+| Moderation | Moderate Members, Manage Messages, Kick/Ban Members | Server Members |
+| Tickets and server layouts | Manage Channels, Manage Roles | None |
+| Embed emoji installer | Manage Expressions | None |
+
+The bot role must be above roles it assigns or moderates. Channel-specific overwrites can still block a permission granted at the server level.
 
 ### Run tests and inspect changes
 
@@ -230,4 +261,5 @@ Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before openin
 ## License
 
 Conquest is released under the [MIT License](LICENSE). It is an independent project and is not endorsed by Discord.
+
 
