@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ChannelType } = require('discord.js');
 const { success, error, info } = require('../../utils/embed');
 const storage = require('../../utils/storage');
 const cfg = require('../../config.json');
@@ -13,7 +13,7 @@ module.exports = {
       .setName('setverify')
       .setDescription('Set up a verification system with a button')
       .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
-      .addChannelOption(o => o.setName('channel').setDescription('Channel to send the verify embed to').setRequired(true))
+      .addChannelOption(o => o.setName('channel').setDescription('Channel to send the verify embed to').addChannelTypes(ChannelType.GuildText, ChannelType.GuildAnnouncement).setRequired(true))
       .addRoleOption(o => o.setName('role').setDescription('Role to give when verified').setRequired(true))
       .addStringOption(o => o.setName('message').setDescription('Custom verify message (optional)').setRequired(false))
       .addStringOption(o => o.setName('color').setDescription('Embed color hex (e.g. #00FF00, optional)').setRequired(false)),
@@ -44,6 +44,24 @@ module.exports = {
 
     if (!verifyChannel) return reply({ embeds: [error(client, 'No Channel', 'Mention the channel to post verification in.')] });
     if (!verifyRole)    return reply({ embeds: [error(client, 'No Role', 'Mention the role to give upon verification.')] });
+
+    if (!verifyChannel.isTextBased?.() || !verifyChannel.send) {
+      return reply({ embeds: [error(client, 'Invalid Channel', 'Choose a text or announcement channel where I can send messages.')] });
+    }
+    if (verifyRole.managed || verifyRole.id === source.guild.id) {
+      return reply({ embeds: [error(client, 'Invalid Role', 'Choose a normal member role. Managed integration roles and @everyone cannot be assigned.')] });
+    }
+    const botMember = source.guild.members.me ?? await source.guild.members.fetch(client.user.id).catch(() => null);
+    if (!botMember?.permissions.has(PermissionFlagsBits.ManageRoles)) {
+      return reply({ embeds: [error(client, 'Missing Permission', 'I need **Manage Roles** to assign the verification role.')] });
+    }
+    if (botMember.roles.highest.comparePositionTo(verifyRole) <= 0) {
+      return reply({ embeds: [error(client, 'Role Hierarchy', 'Move my highest role above the verification role, then try again.')] });
+    }
+    const channelPermissions = verifyChannel.permissionsFor(botMember);
+    if (!channelPermissions?.has([PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.EmbedLinks])) {
+      return reply({ embeds: [error(client, 'Missing Channel Permissions', 'I need View Channel, Send Messages, and Embed Links in that channel.')] });
+    }
 
     // Save config
     const configs = storage.get('configs.json', source.guild.id, {});
@@ -80,3 +98,4 @@ module.exports = {
       `Verify embed sent to ${verifyChannel}.\nRole: ${verifyRole}\nUsers click the button to get verified.`)] });
   },
 };
+
