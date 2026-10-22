@@ -99,7 +99,7 @@ Create an OAuth2 URL in the Developer Portal with the `bot` and `applications.co
 
 ### 7. Configure a server
 
-Invite Conquest, then use `?help` to browse commands. An administrator can configure logging with `?setlog #mod-log`, set welcome or verification options, create a ticket panel, and apply a starter layout with `?serverbuild community` (or `gaming`, `study`, `creator`). The bot needs the corresponding channel/role permissions for each feature. Review Discord's invite screen and grant additional permissions only when you enable those features.
+Invite Conquest, then use `?help` to browse commands. An administrator can configure logging with `?setlog #mod-log`, set welcome options, create a ticket panel, list templates with `?templates`, apply a starter layout with `?serverbuild community` (or `gaming`, `study`, `creator`), and set up verification with `?setverify #verify @Member`. Disable the panel configuration with `?verifyoff`; existing verification messages stay in the channel. The bot needs the corresponding channel/role permissions for each feature. Review Discord's invite screen and grant additional permissions only when you enable those features.
 
 For server-local embed styling, an administrator with **Manage Expressions** can run `?installembedemoji` or `/installembedemoji`. The core pack adds six Conquest emojis without replacing or deleting existing emojis. For the full **102-symbol** set, run `?installembedemoji full` or use `/installembedemoji` with **full: true**. The full pack includes themed moderation, safety, server, utility, community, support, status, and economy icons. Discord limits how many custom emojis each server can store, so the command installs what fits, reports the result, and stops when the server reaches its limit. The bot also needs **Create Expressions** or **Manage Expressions**. Custom embeds include Conquest branding and a timestamp; use the server emoji picker to insert installed icons into titles or descriptions.
 
@@ -234,6 +234,9 @@ Conquest must already be in the selected server. This records the server for the
 | `?status` / `?ping` | Check bot status and latency |
 | `?antiraid [off\|low\|medium\|high]` | Owner/team DM: view or set global anti-raid sensitivity |
 | `?serverbuild <template>` | Add a starter layout without deleting existing items |
+| `?templates` | List the available community, gaming, study, and creator layouts |
+| `?setverify #channel @role [message]` / `/setverify` | Post a button that gives a member role after verification |
+| `?verifyoff` / `/verifyoff` | Remove the saved verification configuration without deleting its message |
 | `?ticketpanel [#channel]` | Post a support panel |
 | `?invite [core\|moderation\|setup\|full]` | Generate an invite; review any extra permissions before approving |
 | `?checkservers` | Owner/team DM: inspect bot server membership and announcement setup |
@@ -261,5 +264,6 @@ Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before openin
 ## License
 
 Conquest is released under the [MIT License](LICENSE). It is an independent project and is not endorsed by Discord.
+
 
 
