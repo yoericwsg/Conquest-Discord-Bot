@@ -4,13 +4,13 @@ const storage = require('../../utils/storage');
 
 module.exports = {
   name: 'setairole',
-  description: 'Set which role can use AI creation features',
+  description: 'Set which role can use server-building features in AI mode',
   aliases: ['airole'],
   cooldown: 5,
   slash: {
     data: new SlashCommandBuilder()
       .setName('setairole')
-      .setDescription('Set which role can trigger AI server actions (create channels, roles, etc.)')
+      .setDescription('Set which role can trigger server actions from AI mode')
       .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
       .addRoleOption(o => o.setName('role').setDescription('Role to allow AI actions (leave empty to remove restriction)').setRequired(false)),
   },
@@ -19,7 +19,7 @@ module.exports = {
     const reply   = opts => isSlash ? source.reply(opts) : source.channel.send(opts);
 
     if (!source.member.permissions.has(PermissionFlagsBits.ManageGuild))
-      return reply({ embeds: [error(client, 'No Permission', 'Need **Manage Server** to configure AI roles.')] });
+      return reply({ embeds: [error(client, 'No Permission', 'Need **Manage Server** to configure the AI action role.')] });
 
     const guildId = source.guild.id;
     const configs = storage.get('configs.json', guildId, {});
@@ -43,11 +43,12 @@ module.exports = {
     if (role) {
       configs.aiActionRole = role.id;
       storage.set('configs.json', guildId, configs);
-      return reply({ embeds: [success(client, '🤖 AI Role Set', `Only members with ${role} (or admins) can use AI creation features.\nThis covers: create/delete channels, roles, categories, assign roles, set permissions.`)] });
+      return reply({ embeds: [success(client, 'AI Action Role Set', `Only members with ${role} (or admins) can use server actions from AI mode.\nThis covers channel, category, role, and permission changes.`)] });
     } else {
       delete configs.aiActionRole;
       storage.set('configs.json', guildId, configs);
-      return reply({ embeds: [info(client, '🤖 AI Role Removed', [], 'AI creation features are now open to everyone in AI-enabled channels.')] });
+      return reply({ embeds: [info(client, 'AI Action Role Removed', [], 'Server actions are now open to everyone in AI-enabled channels.')] });
     }
   },
 };
+
