@@ -59,7 +59,12 @@ function loadCommands() {
     for (const file of fs.readdirSync(catPath).filter(f => f.endsWith('.js'))) {
       try {
         const cmd = require(path.join(catPath, file));
+        const label = cmd.name ?? cmd.slash?.data?.name ?? file;
         if (cmd.slash?.data) {
+          const slashName = cmd.slash.data.name;
+          if (client.commands.has(slashName)) {
+            throw new Error(`Duplicate slash command name: ${slashName}`);
+          }
           client.commands.set(cmd.slash.data.name, cmd);
           client.slashPayloads.push(cmd.slash.data.toJSON());
         }
@@ -76,7 +81,6 @@ function loadCommands() {
             client.aliases.set(alias, cmd.name);
           });
         }
-        const label = cmd.name ?? cmd.slash?.data?.name ?? file;
         console.log(`\x1b[32m[CMD]\x1b[0m ${cat}/${label}`);
       } catch (e) {
         console.error(`\x1b[31m[CMD ERR]\x1b[0m ${cat}/${file}: ${e.message}`);
@@ -409,7 +413,7 @@ client.on('messageCreate', async message => {
   if (!message.content.startsWith(prefix)) return;
 
   let args      = message.content.slice(prefix.length).trim().split(/\s+/);
-  const cmdName = args.shift().toLowerCase();
+  const cmdName = String(args.shift() ?? '').toLowerCase();
   if (!cmdName) return;
 
   let effectiveCmdName = cmdName;
@@ -587,4 +591,8 @@ loadCommands();
 
 const token = process.env.DISCORD_TOKEN;
 if (!token) { console.error('\x1b[31m[FATAL]\x1b[0m DISCORD_TOKEN not set'); process.exit(1); }
-client.login(token);
+client.login(token).catch(error => {
+  console.error(`\x1b[31m[FATAL]\x1b[0m Discord login failed: ${error.message}`);
+  process.exitCode = 1;
+});
+
