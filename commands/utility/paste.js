@@ -397,3 +397,4 @@ module.exports = {
     await runPaste(typeArg, clip, targetGuild, userId, client, sendNew, o => progressMsg.edit(o), skipConfirm);
   },
 };
+
