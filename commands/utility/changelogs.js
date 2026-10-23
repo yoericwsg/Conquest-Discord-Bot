@@ -53,3 +53,4 @@ module.exports = {
     return sendText(`Posted **${release.version}** changelog to ${sent}/${results.length} servers.${skipped ? ` ${skipped} were skipped because an announcement/system channel or send permission was unavailable.` : ''}`);
   },
 };
+
