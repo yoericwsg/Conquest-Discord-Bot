@@ -22,7 +22,9 @@ function getMistralClient() {
   if (!apiKey) throw new Error('AI is unavailable: configure MISTRAL_API_KEY or GROQ_API_KEY in the bot host environment.');
   if (mistralClient) return mistralClient;
   const request = async options => {
-    const response = await fetch('https://api.mistral.ai/v1/chat/completions', {
+    let response;
+    try {
+      response = await fetch('https://api.mistral.ai/v1/chat/completions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
       body: JSON.stringify({
@@ -33,10 +35,28 @@ function getMistralClient() {
         ...(options.tools?.length ? { tools: options.tools, tool_choice: options.tool_choice ?? 'auto' } : {}),
       }),
       signal: AbortSignal.timeout(30000),
-    });
+      });
+    } catch (error) {
+      if (process.env.GROQ_API_KEY || process.env.GROQ_KEY) {
+        console.warn('[AI] Mistral request failed; falling back to Groq:', error.message);
+        return getGroqClient().chat.completions.create({
+          ...options,
+          model: options.max_tokens > 1000 ? 'llama-3.3-70b-versatile' : 'llama-3.1-8b-instant',
+        });
+      }
+      throw error;
+    }
     if (!response.ok) {
       const detail = await response.text().catch(() => '');
-      throw new Error(`Mistral HTTP ${response.status}: ${detail.slice(0, 300)}`);
+      const error = new Error(`Mistral HTTP ${response.status}: ${detail.slice(0, 300)}`);
+      if ((process.env.GROQ_API_KEY || process.env.GROQ_KEY) && [401, 403, 408, 429, 500, 502, 503].includes(response.status)) {
+        console.warn('[AI] Mistral returned an error; falling back to Groq:', error.message);
+        return getGroqClient().chat.completions.create({
+          ...options,
+          model: options.max_tokens > 1000 ? 'llama-3.3-70b-versatile' : 'llama-3.1-8b-instant',
+        });
+      }
+      throw error;
     }
     return response.json();
   };
@@ -57,6 +77,14 @@ const FAST_MODEL    = process.env.MISTRAL_FAST_MODEL || (process.env.MISTRAL_API
 const SMART_MODEL   = process.env.MISTRAL_SMART_MODEL || (process.env.MISTRAL_API_KEY ? 'mistral-large-latest' : 'llama-3.3-70b-versatile');
 const VISION_MODEL  = process.env.MISTRAL_VISION_MODEL || (process.env.MISTRAL_API_KEY ? 'pixtral-12b-2409' : 'llama-3.2-11b-vision-preview');
 
+function readableAiError(error) {
+  const message = String(error?.message ?? '').toLowerCase();
+  if (message.includes('401') || message.includes('403') || message.includes('api key')) return 'AI key rejected. Check MISTRAL_API_KEY or GROQ_API_KEY in Bot-Hosting settings.';
+  if (message.includes('429') || message.includes('rate limit')) return 'AI provider rate limit reached. Try again in a moment or configure the other provider.';
+  if (message.includes('timeout') || message.includes('aborted')) return 'AI provider timed out. Try again with a shorter request.';
+  return `AI provider error (${getAiProvider()}). Check the provider key and model settings.`;
+}
+
 // Keywords that signal the user wants a Discord action
 const ACTION_RE = /\b(create|make|build|set up|setup|add|remove|delete|give|set perm|assign|kick|ban|unban|timeout|mute|purge|clear|pin|embed|nuke|clone|copy|rename|warn|category|channel|role|server layout)\b/i;
 
@@ -76,7 +104,7 @@ const PROMPTS = {
   code:    `You're unitClan, the coding homie. Know your stuff — JS, Python, whatever they throw. Casual: "aight so here's the deal", "ngl this bit's sus", "ight check it". Use Discord code blocks always. Explain what the code does, not just paste it. Point out bugs, suggest fixes. Emojis: 💻🐛⚡🔧`,
   science: `You're unitClan, the science homie. Physics, chemistry, bio, astronomy — all of it. Break stuff down casually, make it actually interesting. "okay so basically", "wild right?", "ngl this is lowkey mind blowing". Real world examples when possible. Emojis: 🔬⚗️🧬🌍⚡`,
   gf:      `You're unitClan in girlfriend mode. Sweet, caring, playful and a little flirty — pet names like babe/bub sometimes, supportive, hype them up, tease lightly, tasteful (never explicit/NSFW). Ask about their day, be affectionate. Emojis: 🥰💕😉✨. Still genuinely helpful if they need something.`,
-  build:   `You're unitClan in Build mode — an expert Discord server architect. Turn a clear server idea into a practical, organized layout of categories, text/voice channels, and useful starter roles. Ask one short question if the server purpose or a key requirement is unclear; otherwise build it in one organized batch. Use clear lowercase-hyphen text channel names, sensible categories, and no more than 8 categories or 50 channels per request. Build mode is additive only: never delete or rename existing items, change permissions, kick members, or claim success when a tool reports an error. Check the supplied server structure first and skip anything already present. After tools finish, briefly summarize what was created and explain any failures or skipped duplicates. Casual, clear, and practical. Emojis: 🏗️🛠️✅`,
+  build:   `You're unitClan in Build mode — an expert Discord server architect. Turn a clear server idea into a practical, organized layout of categories, text/voice channels, role hierarchy, permission overwrites, rules, onboarding, raid spaces, activity logs, and partnership areas. Use clear lowercase-hyphen text channel names, sensible categories, and no more than 8 categories or 50 channels per request. Inspect the supplied server structure first, skip duplicates, and only delete or rename items when the user explicitly names them. Add roles with the least permissions needed, apply channel overwrites when requested, and never claim success when a tool reports an error. After tools finish, summarize created, skipped, changed, and failed items. Casual, clear, and practical. Emojis: 🏗️🛠️🔐✅`,
   server:  `You're unitClan in server mode — a capable Discord server manager. Carry out clear server-management requests with your tools. Ask one short question only when the target or request is ambiguous. Never claim success when a tool reports an error; explain permission or hierarchy problems plainly. Keep destructive actions limited to the exact item the user named. Confirm completed actions briefly. Casual tone, no fluff. Emojis: 🛠️✅⚙️`,
 };
 
@@ -338,6 +366,10 @@ const BUILD_TOOL_NAMES = new Set([
   'create_category',
   'create_role',
   'clone_server_structure',
+  'delete_channel',
+  'edit_channel',
+  'set_channel_permissions',
+  'assign_role',
 ]);
 
 function getToolsForMode(mode) {
@@ -346,8 +378,8 @@ function getToolsForMode(mode) {
     .filter(tool => BUILD_TOOL_NAMES.has(tool.function.name))
     .map(tool => {
       const removedProperties = {
-        create_channel: ['private'],
-        create_role: ['permissions'],
+        create_channel: [],
+        create_role: [],
       }[tool.function.name] ?? [];
       if (!removedProperties.length) return tool;
       const properties = Object.fromEntries(
@@ -767,7 +799,8 @@ async function chat(channelId, userMessage, displayName, userId, mode, guild, ch
       });
       reply = completion.choices[0]?.message?.content ?? 'bruh idk 💀';
     } catch (e) {
-      reply = 'my brain lagged looking at that 💀 try again in a sec';
+      console.error('[AI Vision Err]', readableAiError(e));
+      reply = `AI vision is unavailable right now 💀 ${readableAiError(e)}`;
     }
     history.push({ role: 'assistant', content: reply });
     while (history.length > MAX_HISTORY) history.shift();
@@ -791,7 +824,8 @@ async function chat(channelId, userMessage, displayName, userId, mode, guild, ch
     completion = await getAiClient().chat.completions.create(callOpts);
     msg = completion.choices[0]?.message;
   } catch (e) {
-    return 'my brain lagged for a sec 💀 try that again';
+    console.error('[AI Chat Err]', e.message);
+    return `AI is unavailable right now 💀 ${readableAiError(e)}`;
   }
 
   // Handle tool calls
