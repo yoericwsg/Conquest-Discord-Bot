@@ -258,7 +258,7 @@ client.on('messageCreate', async message => {
     if (!message.content.startsWith(dmPrefix)) return;
     const [rawCommand, ...args] = message.content.slice(dmPrefix.length).trim().split(/\s+/);
     const commandName = String(rawCommand ?? '').toLowerCase();
-    if (!['serversin', 'bypassroleadd', 'downtime', 'down', 'downtimeby', 'announce', 'ann', 'broadcast', 'checkservers', 'forcegeninvite', 'changelogs', 'changelog', 'release', 'antiraid', 'earlyaccess', 'earlyacsess', 'removecd', 'clearcd', 'resetcd'].includes(commandName)) return;
+    if (!['serversin', 'bypassroleadd', 'downtime', 'down', 'downtimeby', 'announce', 'ann', 'broadcast', 'checkservers', 'forcegeninvite', 'changelogs', 'changelog', 'release', 'antiraid', 'earlyaccess', 'earlyacsess', 'removecd', 'clearcd', 'resetcd', 'cooldownremove', 'removecooldown', 'clearservercd'].includes(commandName)) return;
 
     const commandKey = client.aliases.get(commandName) ?? commandName;
     const command = client.prefixCommands.get(commandKey);
@@ -561,13 +561,15 @@ async function handleLeave(member) {
 async function handleCooldown(source, cmd) {
   if (!cmd.cooldown) return true;
   const userId  = source.user?.id ?? source.author?.id;
+  const guildId = source.guild?.id ?? 'dm';
+  const cooldownKey = `${guildId}:${userId}`;
   const name    = cmd.name ?? cmd.slash?.data?.name ?? 'unknown';
   if (!client.cooldowns.has(name)) client.cooldowns.set(name, new Collection());
   const ts  = client.cooldowns.get(name);
   const now = Date.now();
   const cdMs = cmd.cooldown * 1000;
-  if (ts.has(userId)) {
-    const exp = ts.get(userId) + cdMs;
+  if (ts.has(cooldownKey)) {
+    const exp = ts.get(cooldownKey) + cdMs;
     if (now < exp) {
       const rem = ((exp - now) / 1000).toFixed(1);
       const { warning } = require('./utils/embed');
@@ -580,8 +582,8 @@ async function handleCooldown(source, cmd) {
       return false;
     }
   }
-  ts.set(userId, now);
-  setTimeout(() => ts.delete(userId), cdMs);
+  ts.set(cooldownKey, now);
+  setTimeout(() => ts.delete(cooldownKey), cdMs);
   return true;
 }
 
@@ -595,6 +597,7 @@ client.login(token).catch(error => {
   console.error(`\x1b[31m[FATAL]\x1b[0m Discord login failed: ${error.message}`);
   process.exitCode = 1;
 });
+
 
 
 
