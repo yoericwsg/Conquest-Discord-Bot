@@ -135,7 +135,55 @@ const TEMPLATES = {
       },
     ],
   },
-  clan: {
+  server: {
+    label: 'Operations Server',
+    description: 'A full server foundation with staff hierarchy, operations, business, and community spaces.',
+    roles: [
+      { name: 'Administrator', color: '#992D22', hoist: true },
+      { name: 'Admin', color: '#E74C3C', hoist: true },
+      { name: 'Agent', color: '#E67E22', hoist: true },
+      { name: 'Deputy', color: '#F1C40F', hoist: true },
+      { name: 'General', color: '#2ECC71', hoist: true },
+      { name: 'Head of Operations', color: '#1ABC9C', hoist: true },
+      { name: 'Operations Manager', color: '#3498DB', hoist: true },
+      { name: 'Business', color: '#9B59B6', hoist: true },
+      { name: 'Human Resources', color: '#E91E63', hoist: true },
+      { name: 'Moderator', color: '#57F287', hoist: true },
+      { name: 'Verified Member', color: '#5865F2' },
+    ],
+    categories: [
+      { name: 'START HERE', channels: [
+        { name: 'welcome', topic: 'Welcome and server orientation.' },
+        { name: 'rules', topic: 'Server rules and staff standards.' },
+        { name: 'announcements', topic: 'Official updates and notices.' },
+        { name: 'verify', topic: 'Member verification and onboarding.' },
+      ] },
+      { name: 'COMMAND CENTER', channels: [
+        { name: 'staff-chat', topic: 'Staff coordination and decisions.' },
+        { name: 'operations-board', topic: 'Assign work, track priorities, and coordinate operations.' },
+        { name: 'activity-log', topic: 'Staff actions, member activity, and audit notes.' },
+        { name: 'reports', topic: 'Incident and moderation reports.' },
+      ] },
+      { name: 'BUSINESS', channels: [
+        { name: 'business-chat', topic: 'Business planning and discussion.' },
+        { name: 'partnerships', topic: 'Partnership requests and contacts.' },
+        { name: 'projects', topic: 'Project planning and progress.' },
+        { name: 'resources', topic: 'Shared documents, links, and resources.' },
+      ] },
+      { name: 'COMMUNITY', channels: [
+        { name: 'general', topic: 'General member conversation.' },
+        { name: 'suggestions', topic: 'Ideas and feedback.' },
+        { name: 'events', topic: 'Events, schedules, and activities.' },
+        { name: 'media', topic: 'Community media and highlights.' },
+      ] },
+      { name: 'VOICE', channels: [
+        { name: 'Operations Room', type: 'voice' },
+        { name: 'Staff Room', type: 'voice' },
+        { name: 'Community Lounge', type: 'voice' },
+        { name: 'AFK', type: 'voice' },
+      ] },
+    ],
+  },  clan: {
     label: 'Clan HQ',
     description: 'A complete clan server with raid operations, activity tracking, and partnerships.',
     roles: [
@@ -297,6 +345,8 @@ async function createServerFromTemplate(guild, templateKey) {
 }
 
 module.exports = { TEMPLATES, createServerFromTemplate, cleanTextChannelName };
+
+
 
 
 
