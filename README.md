@@ -240,6 +240,9 @@ unitClan must already be in the selected server. This records the server for the
 | `?rolesetup` / `/rolesetup` | Early-access servers: add the full staff and clan role set |
 | `?createrules` / `/createrules` | Post an advanced rules embed with themed emoji headings |
 | `?rolecreate <name>` / `/rolecreate` | Create a styled role with optional server link and ping |
+| `?emojiadd all` / `/emojiadd` | Add themed emoji prefixes to detected channel names |
+| `?permadd` / `/permadd` | Apply detected public/private channel permissions |
+| `?rolepermadd` / `/rolepermadd` | Apply staff permission profiles to matching roles |
 | `?clansetup` / `/clansetup` | Build clan roles plus raid, activity, and partnership channels |
 | `?templates` | List the available community, gaming, study, and creator layouts |
 | `?setverify #channel @role [message]` / `/setverify` | Post a button that gives a member role after verification |
@@ -276,6 +279,7 @@ Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before openin
 ## License
 
 unitClan is released under the [MIT License](LICENSE). It is an independent project and is not endorsed by Discord.
+
 
 
 
