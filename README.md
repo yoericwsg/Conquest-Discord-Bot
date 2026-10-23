@@ -237,6 +237,9 @@ unitClan must already be in the selected server. This records the server for the
 | `?antiraid [off\|low\|medium\|high]` | Owner/team DM: view or set global anti-raid sensitivity |
 | `?serverbuild <template>` | Add a starter layout without deleting existing items |
 | `?setupserver` / `/setupserver` | Build staff, operations, business, community, and voice channels |
+| `?rolesetup` / `/rolesetup` | Early-access servers: add the full staff and clan role set |
+| `?createrules` / `/createrules` | Post an advanced rules embed with themed emoji headings |
+| `?rolecreate <name>` / `/rolecreate` | Create a styled role with optional server link and ping |
 | `?clansetup` / `/clansetup` | Build clan roles plus raid, activity, and partnership channels |
 | `?templates` | List the available community, gaming, study, and creator layouts |
 | `?setverify #channel @role [message]` / `/setverify` | Post a button that gives a member role after verification |
@@ -248,6 +251,7 @@ unitClan must already be in the selected server. This records the server for the
 | `?checkservers` | Owner/team DM: inspect bot server membership and announcement setup |
 | `?announce <serverID> <reason>` | Owner/team DM: announce to a selected server |
 | `?downtime 1hr <reason>` | Owner/team DM: post a temporary maintenance notice |
+| `?removecd <command> [userId]` | Owner/team DM: clear command cooldown entries |
 | `?installembedemoji [full]` / `/installembedemoji` | Install the six-icon core pack or the optional 102-symbol full pack (Manage Expressions required) |
 | `?changelogs latest` / `?changelogs older` or `/changelogs` | Owner/team DM: broadcast the latest or previous release notes |
 
@@ -272,6 +276,7 @@ Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before openin
 ## License
 
 unitClan is released under the [MIT License](LICENSE). It is an independent project and is not endorsed by Discord.
+
 
 
 
