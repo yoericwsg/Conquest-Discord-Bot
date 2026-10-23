@@ -135,7 +135,46 @@ const TEMPLATES = {
       },
     ],
   },
-};
+  clan: {
+    label: 'Clan HQ',
+    description: 'A complete clan server with raid operations, activity tracking, and partnerships.',
+    roles: [
+      { name: 'Clan Member', color: '#5865F2' },
+      { name: 'Clan Staff', color: '#57F287', hoist: true },
+      { name: 'Raid Lead', color: '#ED4245', hoist: true },
+      { name: 'Partner', color: '#FEE75C', hoist: true },
+    ],
+    categories: [
+      { name: 'CLAN START HERE', channels: [
+        { name: 'welcome', topic: 'Welcome to the clan.' },
+        { name: 'rules', topic: 'Clan rules and expectations.' },
+        { name: 'announcements', topic: 'Official clan announcements.' },
+        { name: 'verify', topic: 'Member verification and onboarding.' },
+      ] },
+      { name: 'CLAN HQ', channels: [
+        { name: 'clan-chat', topic: 'Main clan discussion.' },
+        { name: 'staff-chat', topic: 'Private staff coordination.' },
+        { name: 'suggestions', topic: 'Ideas for improving the clan.' },
+        { name: 'polls', topic: 'Clan votes and decisions.' },
+      ] },
+      { name: 'RAID OPERATIONS', channels: [
+        { name: 'raid-lobby', topic: 'Start and coordinate raids with ?raidstart or /raidstart.' },
+        { name: 'raid-plans', topic: 'Raid plans, targets, times, and roles.' },
+        { name: 'raid-results', topic: 'Post raid results and screenshots.' },
+        { name: 'raid-voice', type: 'voice' },
+      ] },
+      { name: 'ACTIVITY', channels: [
+        { name: 'activity-log', topic: 'Staff activity notes and member milestones.' },
+        { name: 'member-highlights', topic: 'Recognize active clan members.' },
+        { name: 'event-calendar', topic: 'Clan events and scheduled sessions.' },
+      ] },
+      { name: 'PARTNERSHIPS', channels: [
+        { name: 'partner-requests', topic: 'Submit partnership requests.' },
+        { name: 'partner-announcements', topic: 'Approved partner announcements.' },
+        { name: 'partner-lounge', topic: 'Shared space for partner communities.' },
+      ] },
+    ],
+  },};
 
 const CHANNEL_TYPES = {
   text: ChannelType.GuildText,
@@ -258,4 +297,6 @@ async function createServerFromTemplate(guild, templateKey) {
 }
 
 module.exports = { TEMPLATES, createServerFromTemplate, cleanTextChannelName };
+
+
 
