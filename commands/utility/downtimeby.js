@@ -31,3 +31,4 @@ module.exports = {
     return reply({ embeds: [success(client, 'Downtime label updated', `Future downtime notices will show **${label}** as your team rank. Command access remains restricted to the application owner/team.`)] });
   },
 };
+
