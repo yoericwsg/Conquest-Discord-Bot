@@ -114,3 +114,4 @@ function formatUptime(ms) {
 }
 
 module.exports = { base, success, error, warning, panel, info, profile, moderation, COLORS, withImage, progressBar, formatUptime, withGuildContext, resolveEmoji, styleTitle, SEP, FOOTER };
+
