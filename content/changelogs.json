@@ -26,10 +26,11 @@
       "+ Added reason tracking to command and system disable controls, including ?disableban and ?disableaimode.",
       "~ Improved anti-raid alerts, temporary verification recovery, and per-server spam tracking.",
       "- Fixed missing embed helpers that caused the server count command to fail.",
-      "- Fixed AI command loading when a Groq key is missing and clarified the required host environment variable.",
+      "- Fixed AI command loading when a Mistral key is missing and clarified the required host environment variable.",
       "~ Updated the bot invite generator to request feature permissions without Administrator.",
       "+ Added ticket-panel setup and restricted ticket closing to the opener and server staff."
     ]
   }
 ]
+
 
