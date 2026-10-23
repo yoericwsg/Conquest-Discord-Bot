@@ -24,3 +24,4 @@ module.exports = {
     await reply({ embeds: [panel(client, `🛒  unitClan Shop`, lines)] });
   },
 };
+
