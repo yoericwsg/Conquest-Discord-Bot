@@ -101,7 +101,7 @@ Create an OAuth2 URL in the Developer Portal with the `bot` and `applications.co
 
 ### 7. Configure a server
 
-Invite unitClan, then use `?help` to browse commands. An administrator can configure logging with `?setlog #mod-log`, set welcome options, create a ticket panel, list templates with `?templates`, apply a starter layout with `?serverbuild community` (or `gaming`, `study`, `creator`), and set up verification with `?setverify #verify @Member`. Disable the panel configuration with `?verifyoff`; existing verification messages stay in the channel. The bot needs the corresponding channel/role permissions for each feature. Review Discord's invite screen and grant additional permissions only when you enable those features.
+Invite unitClan, then use `?help` to browse commands. An administrator can configure logging with `?setlog #mod-log`, set welcome options, create a ticket panel, list templates with `?templates`, apply a starter layout with `?serverbuild community`, or build a clan layout with `?clansetup` (or `gaming`, `study`, `creator`), and set up verification with `?setverify #verify @Member`. Disable the panel configuration with `?verifyoff`; existing verification messages stay in the channel. The bot needs the corresponding channel/role permissions for each feature. Review Discord's invite screen and grant additional permissions only when you enable those features.
 
 For server-local embed styling, an administrator with **Manage Expressions** can run `?installembedemoji` or `/installembedemoji`. The core pack adds six unitClan emojis without replacing or deleting existing emojis. For the full **102-symbol** set, run `?installembedemoji full` or use `/installembedemoji` with **full: true**. The full pack includes themed moderation, safety, server, utility, community, support, status, and economy icons. Discord limits how many custom emojis each server can store, so the command installs what fits, reports the result, and stops when the server reaches its limit. The bot also needs **Create Expressions** or **Manage Expressions**. Custom embeds include unitClan branding and a timestamp; use the server emoji picker to insert installed icons into titles or descriptions.
 
@@ -235,7 +235,7 @@ unitClan must already be in the selected server. This records the server for the
 | `?help` | Browse available commands |
 | `?status` / `?ping` | Check bot status and latency |
 | `?antiraid [off\|low\|medium\|high]` | Owner/team DM: view or set global anti-raid sensitivity |
-| `?serverbuild <template>` | Add a starter layout without deleting existing items |
+| `?serverbuild <template>` | Add a starter layout without deleting existing items |`n| `?clansetup` / `/clansetup` | Build clan roles plus raid, activity, and partnership channels |
 | `?templates` | List the available community, gaming, study, and creator layouts |
 | `?setverify #channel @role [message]` / `/setverify` | Post a button that gives a member role after verification |
 | `?verifyoff` / `/verifyoff` | Remove the saved verification configuration without deleting its message |
@@ -270,6 +270,8 @@ Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before openin
 ## License
 
 unitClan is released under the [MIT License](LICENSE). It is an independent project and is not endorsed by Discord.
+
+
 
 
 
