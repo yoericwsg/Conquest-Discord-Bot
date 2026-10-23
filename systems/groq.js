@@ -3,6 +3,7 @@ const Groq = require('groq-sdk');
 // Short timeout + only 1 retry — a hung/rate-limited request should fail fast
 // with a friendly fallback instead of leaving the user staring at "typing..." forever.
 let groqClient = null;
+let mistralClient = null;
 
 function getGroqClient() {
   const apiKey = process.env.GROQ_API_KEY || process.env.GROQ_KEY;
@@ -11,14 +12,50 @@ function getGroqClient() {
   return groqClient;
 }
 
+function getAiProvider() {
+  if (process.env.MISTRAL_API_KEY || process.env.MISTRAL_KEY) return 'mistral';
+  return 'groq';
+}
+
+function getMistralClient() {
+  const apiKey = process.env.MISTRAL_API_KEY || process.env.MISTRAL_KEY;
+  if (!apiKey) throw new Error('AI is unavailable: configure MISTRAL_API_KEY or GROQ_API_KEY in the bot host environment.');
+  if (mistralClient) return mistralClient;
+  const request = async options => {
+    const response = await fetch('https://api.mistral.ai/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
+      body: JSON.stringify({
+        model: options.model,
+        messages: options.messages,
+        max_tokens: options.max_tokens,
+        temperature: options.temperature,
+        ...(options.tools?.length ? { tools: options.tools, tool_choice: options.tool_choice ?? 'auto' } : {}),
+      }),
+      signal: AbortSignal.timeout(30000),
+    });
+    if (!response.ok) {
+      const detail = await response.text().catch(() => '');
+      throw new Error(`Mistral HTTP ${response.status}: ${detail.slice(0, 300)}`);
+    }
+    return response.json();
+  };
+  mistralClient = { chat: { completions: { create: request } } };
+  return mistralClient;
+}
+
+function getAiClient() {
+  return getAiProvider() === 'mistral' ? getMistralClient() : getGroqClient();
+}
+
 const histories = new Map();
 const MAX_HISTORY = 8; // keep low — each message costs tokens
 
 // Models — llama-3.1-8b-instant is Groq's fastest model with the highest free-tier
 // rate limit, used for all chat modes. Smarter modes use the bigger model.
-const FAST_MODEL    = 'llama-3.1-8b-instant';
-const SMART_MODEL   = 'llama-3.3-70b-versatile'; // for math/english/code/science
-const VISION_MODEL  = 'llama-3.2-11b-vision-preview';
+const FAST_MODEL    = process.env.MISTRAL_FAST_MODEL || (process.env.MISTRAL_API_KEY ? 'mistral-small-latest' : 'llama-3.1-8b-instant');
+const SMART_MODEL   = process.env.MISTRAL_SMART_MODEL || (process.env.MISTRAL_API_KEY ? 'mistral-large-latest' : 'llama-3.3-70b-versatile');
+const VISION_MODEL  = process.env.MISTRAL_VISION_MODEL || (process.env.MISTRAL_API_KEY ? 'pixtral-12b-2409' : 'llama-3.2-11b-vision-preview');
 
 // Keywords that signal the user wants a Discord action
 const ACTION_RE = /\b(create|make|build|set up|setup|add|remove|delete|give|set perm|assign|kick|ban|unban|timeout|mute|purge|clear|pin|embed|nuke|clone|copy|rename|warn|category|channel|role|server layout)\b/i;
@@ -722,7 +759,7 @@ async function chat(channelId, userMessage, displayName, userId, mode, guild, ch
     ];
     let reply;
     try {
-      const completion = await getGroqClient().chat.completions.create({
+      const completion = await getAiClient().chat.completions.create({
         model: VISION_MODEL,
         messages: visionMessages,
         max_tokens: 400,
@@ -751,7 +788,7 @@ async function chat(channelId, userMessage, displayName, userId, mode, guild, ch
 
   let completion, msg;
   try {
-    completion = await getGroqClient().chat.completions.create(callOpts);
+    completion = await getAiClient().chat.completions.create(callOpts);
     msg = completion.choices[0]?.message;
   } catch (e) {
     return 'my brain lagged for a sec 💀 try that again';
@@ -772,7 +809,7 @@ async function chat(channelId, userMessage, displayName, userId, mode, guild, ch
 
     // Follow-up reply after action — no tools this time
     try {
-      completion = await getGroqClient().chat.completions.create({
+      completion = await getAiClient().chat.completions.create({
         model,
         messages: [{ role: 'system', content: systemMsg }, ...history],
         max_tokens: 250,
@@ -794,5 +831,7 @@ function clearHistory(channelId) {
   histories.delete(channelId);
 }
 
-module.exports = { chat, clearHistory, executeTool, getToolsForMode, TOOLS };
+module.exports = { chat, clearHistory, executeTool, getToolsForMode, getAiProvider, TOOLS };
+
+
 
