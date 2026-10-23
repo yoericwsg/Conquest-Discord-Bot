@@ -235,7 +235,9 @@ unitClan must already be in the selected server. This records the server for the
 | `?help` | Browse available commands |
 | `?status` / `?ping` | Check bot status and latency |
 | `?antiraid [off\|low\|medium\|high]` | Owner/team DM: view or set global anti-raid sensitivity |
-| `?serverbuild <template>` | Add a starter layout without deleting existing items |`n| `?clansetup` / `/clansetup` | Build clan roles plus raid, activity, and partnership channels |
+| `?serverbuild <template>` | Add a starter layout without deleting existing items |
+| `?setupserver` / `/setupserver` | Build staff, operations, business, community, and voice channels |
+| `?clansetup` / `/clansetup` | Build clan roles plus raid, activity, and partnership channels |
 | `?templates` | List the available community, gaming, study, and creator layouts |
 | `?setverify #channel @role [message]` / `/setverify` | Post a button that gives a member role after verification |
 | `?verifyoff` / `/verifyoff` | Remove the saved verification configuration without deleting its message |
@@ -270,6 +272,10 @@ Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before openin
 ## License
 
 unitClan is released under the [MIT License](LICENSE). It is an independent project and is not endorsed by Discord.
+
+
+
+
 
 
 
