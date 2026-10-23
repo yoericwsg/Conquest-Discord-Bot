@@ -146,7 +146,7 @@ Review the source and the current [release notes](CHANGELOG.md) before enabling 
 
 ## AI provider setup
 
-AI mode supports Mistral directly. Set `MISTRAL_API_KEY` in the Bot-Hosting environment (from [console.mistral.ai](https://console.mistral.ai)) to use Mistral. Optional model variables are `MISTRAL_FAST_MODEL`, `MISTRAL_SMART_MODEL`, and `MISTRAL_VISION_MODEL`. Mistral is the only supported AI provider. Use `?aimode provider` or `/aimode provider` to see the active provider.
+AI mode supports Mistral directly. Set `MISTRAL_API_KEY` in the Bot-Hosting environment (from [console.mistral.ai](https://console.mistral.ai)) to use Mistral. Optional model variables are `MISTRAL_FAST_MODEL`, `MISTRAL_SMART_MODEL` (default `mistral-small-latest`), and `MISTRAL_VISION_MODEL`. Mistral is the only supported AI provider. Use `?aimode provider` or `/aimode provider` to see the active provider.
 
 ## Add selected features to another Discord bot
 
@@ -283,6 +283,7 @@ Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before openin
 ## License
 
 unitClan is released under the [MIT License](LICENSE). It is an independent project and is not endorsed by Discord.
+
 
 
 
