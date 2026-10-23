@@ -333,6 +333,17 @@ async function createServerFromTemplate(guild, templateKey) {
           reason: `unitClan ${template.label} server template`,
         };
         if (channelSpec.topic) options.topic = channelSpec.topic;
+        const restricted = /staff|activity-log|operations-board|reports|business-chat/i.test(channelName);
+        if (restricted && type === ChannelType.GuildText) {
+          const privateRoleNames = ['Administrator', 'Admin', 'Head of Operations', 'Operations Manager', 'Clan Staff', 'Raid Lead'];
+          const privateRoles = privateRoleNames
+            .map(roleName => findByName(guild.roles.cache, roleName))
+            .filter(Boolean);
+          options.permissionOverwrites = [
+            { id: guild.roles.everyone.id, deny: [PermissionFlagsBits.ViewChannel] },
+            ...privateRoles.map(role => ({ id: role.id, allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages] })),
+          ];
+        }
         const channel = await guild.channels.create(options);
         result.created.push(type === ChannelType.GuildText ? `#${channel.name}` : `🔊 ${channel.name}`);
       } catch (error) {
@@ -345,6 +356,7 @@ async function createServerFromTemplate(guild, templateKey) {
 }
 
 module.exports = { TEMPLATES, createServerFromTemplate, cleanTextChannelName };
+
 
 
 
