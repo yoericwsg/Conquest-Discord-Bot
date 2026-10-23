@@ -40,3 +40,4 @@ module.exports = {
     return reply({ embeds: [success(client, `Anti-raid: ${requested}`, MODES[requested])] });
   },
 };
+
