@@ -23,6 +23,10 @@ function getMistralClient() {
     });
     if (!response.ok) {
       const detail = await response.text().catch(() => '');
+      if (response.status === 403 && !options._tierFallback && options.model !== 'mistral-small-latest') {
+        console.warn('[AI] Mistral model is unavailable for this tier; retrying with mistral-small-latest.');
+        return request({ ...options, model: 'mistral-small-latest', _tierFallback: true });
+      }
       throw new Error(`Mistral HTTP ${response.status}: ${detail.slice(0, 300)}`);
     }
     return response.json();
