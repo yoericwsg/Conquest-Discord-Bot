@@ -94,8 +94,11 @@ function loadCommands() {
 async function registerSlash(token) {
   const clientId = Buffer.from(token.split('.')[0], 'base64').toString();
   const rest     = new REST().setToken(token);
-  const data     = await rest.put(Routes.applicationCommands(clientId), { body: client.slashPayloads });
-  console.log(`\x1b[36m[SLASH]\x1b[0m Registered ${data.length} commands`);
+  const lowPriority = new Set(['8ball', 'coinflip', 'choose', 'dare', 'dice', 'howgay', 'hug', 'joke', 'meme', 'rate', 'rps', 'slap', 'truth', 'wyr', 'osintmode']);
+  const payloads = client.slashPayloads.filter(command => !lowPriority.has(command.name)).slice(0, 100);
+  const skipped = client.slashPayloads.length - payloads.length;
+  const data     = await rest.put(Routes.applicationCommands(clientId), { body: payloads });
+  console.log(`\x1b[36m[SLASH]\x1b[0m Registered ${data.length} commands${skipped ? ` (${skipped} low-priority commands remain prefix-only because Discord allows 100 global commands)` : ''}`);
 }
 
 // ─── Systems ──────────────────────────────────────────────────────────────────
