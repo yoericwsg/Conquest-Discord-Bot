@@ -12,10 +12,12 @@ module.exports = {
     const command = String(isSlash ? source.options.getString('command') : args[0] ?? '').toLowerCase().replace(/^\?/, ''); const userId = isSlash ? source.options.getString('user_id') : args[1];
     if (!command) return reply({ embeds: [error(client, 'Missing command', 'Use `?removecd <command> [userId]`.')] });
     const map = client.cooldowns.get(command); let cleared = 0;
-    if (map) { if (userId) { if (map.delete(userId)) cleared++; } else { cleared = map.size; map.clear(); } }
+    if (map) { for (const key of map.keys()) if (!userId || key.endsWith(':' + userId) || key === userId) { map.delete(key); cleared++; } }
     for (const key of client.__conquestDmCommandCooldowns?.keys?.() ?? []) if (key.startsWith(`${command}:`) && (!userId || key.endsWith(`:${userId}`))) { client.__conquestDmCommandCooldowns.delete(key); cleared++; }
     return reply({ embeds: [success(client, 'Cooldown cleared', 'Cleared **' + cleared + '** cooldown entr' + (cleared === 1 ? 'y' : 'ies') + ' for **' + command + '**' + (userId ? ' on **' + userId + '**' : '') + '.')] });
   },
 };
+
+
 
 
