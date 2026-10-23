@@ -58,3 +58,4 @@ module.exports = {
     await reply({ embeds: [panel(client, '🖥️  unitClan — Server Status', lines, color)] });
   },
 };
+
