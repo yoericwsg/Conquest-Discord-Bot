@@ -73,7 +73,7 @@ On macOS or Linux:
 cp .env.example .env
 ```
 
-Set `DISCORD_TOKEN` to the token for **your own** Discord bot application. `GROQ_API_KEY` is optional and only needed for Groq-backed AI features. Set `SESSION_SECRET` to a long, randomly generated private value if you use features that rely on it. Never paste secrets into issues, commits, screenshots, or chat. `.env` is excluded by `.gitignore`; `.env.example` is safe to commit because its values are placeholders.
+Set `DISCORD_TOKEN` to the token for **your own** Discord bot application. `MISTRAL_API_KEY` is required for AI features. Set `SESSION_SECRET` to a long, randomly generated private value if you use features that rely on it. Never paste secrets into issues, commits, screenshots, or chat. `.env` is excluded by `.gitignore`; `.env.example` is safe to commit because its values are placeholders.
 
 ### 4. Start unitClan
 
@@ -119,7 +119,7 @@ For server-local embed styling, an administrator with **Manage Expressions** can
 - **Prefix commands do not respond**: enable Message Content Intent, check the `?` prefix, and confirm the bot can view the channel and send messages.
 - **Slash commands do not appear immediately**: global command registration can take time. Confirm the invite included `applications.commands`, then restart once and check again.
 - **Missing access / missing permissions**: check the bot role position and channel-specific overwrites. Grant only the permission required by the specific feature.
-- **AI replies fail**: AI is optional. Check `GROQ_API_KEY` and provider availability, or leave AI disabled and use the rest of the bot.
+- **AI replies fail**: AI is optional. Check `MISTRAL_API_KEY` and the selected Mistral model.
 - **Bot exits after launch**: read the first error in the terminal, confirm Node.js is version 22+, run `npm install` again, and verify the environment variable names. Do not share the token when asking for help.
 
 ### Permissions by feature
@@ -146,14 +146,14 @@ Review the source and the current [release notes](CHANGELOG.md) before enabling 
 
 ## AI provider setup
 
-AI mode supports Mistral directly. Set `MISTRAL_API_KEY` in the Bot-Hosting environment (from [console.mistral.ai](https://console.mistral.ai)) to use Mistral. Optional model variables are `MISTRAL_FAST_MODEL`, `MISTRAL_SMART_MODEL`, and `MISTRAL_VISION_MODEL`. When no Mistral key is present, unitClan falls back to Groq with `GROQ_API_KEY`. Use `?aimode provider` or `/aimode provider` to see the active provider.
+AI mode supports Mistral directly. Set `MISTRAL_API_KEY` in the Bot-Hosting environment (from [console.mistral.ai](https://console.mistral.ai)) to use Mistral. Optional model variables are `MISTRAL_FAST_MODEL`, `MISTRAL_SMART_MODEL`, and `MISTRAL_VISION_MODEL`. Mistral is the only supported AI provider. Use `?aimode provider` or `/aimode provider` to see the active provider.
 
 ## Add selected features to another Discord bot
 
 This repository is a complete Discord application, not an npm plugin. You can still reuse individual features in an existing bot:
 
 1. Copy the command file and the `systems/` or `utils/` modules it imports.
-2. Install the dependencies used by that feature. Most features use `discord.js`; image embeds use `sharp`; `groq-sdk` is only needed for the optional AI integration.
+2. Install the dependencies used by that feature. Most features use `discord.js`; image embeds use `sharp`; AI mode uses the Mistral HTTP API and needs no provider SDK.
 3. Register the command with your bot's prefix and slash-command loaders.
 4. Copy the configuration keys and storage paths that the feature expects. Do not copy unitClan's `.env` or runtime `data/` files.
 5. Enable the Discord intents and permissions listed in the command's source, then test in a disposable server.
@@ -283,6 +283,7 @@ Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before openin
 ## License
 
 unitClan is released under the [MIT License](LICENSE). It is an independent project and is not endorsed by Discord.
+
 
 
 
