@@ -157,9 +157,9 @@ client.once('clientReady', async () => {
     const { broadcastEmbed } = require('./systems/announcement-delivery');
     const embed = base(client)
       .setColor('#57F287')
-      .setTitle('✅  Conquest is back online')
+      .setTitle('✅  unitClan is back online')
       .setDescription(`The maintenance window has ended.\n**Reason:** ${expired.reason}\n**Started by:** ${expired.rankLabel} · ${expired.startedByTag}`);
-    await broadcastEmbed(client, embed, '✅ Conquest maintenance has ended. The bot is back online.');
+    await broadcastEmbed(client, embed, '✅ unitClan maintenance has ended. The bot is back online.');
   });
 
   try { await registerSlash(process.env.DISCORD_TOKEN); }
@@ -527,7 +527,7 @@ async function handleWelcome(member) {
       .setDescription(msg)
       .setThumbnail(member.user.displayAvatarURL({ size: 256 }))
       .setTimestamp()
-      .setFooter({ text: `Conquest ${cfg.version}`, iconURL: client.user.displayAvatarURL() });
+      .setFooter({ text: `unitClan ${cfg.version}`, iconURL: client.user.displayAvatarURL() });
     ch.send({ embeds: [embed] });
 
     // Auto-role
@@ -552,7 +552,7 @@ async function handleLeave(member) {
       .setColor('#ED4245')
       .setDescription(msg)
       .setTimestamp()
-      .setFooter({ text: `Conquest ${cfg.version}`, iconURL: client.user.displayAvatarURL() });
+      .setFooter({ text: `unitClan ${cfg.version}`, iconURL: client.user.displayAvatarURL() });
     ch.send({ embeds: [embed] });
   } catch {}
 }

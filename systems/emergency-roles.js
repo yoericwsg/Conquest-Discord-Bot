@@ -30,12 +30,12 @@ function validateEmergencyRole(role, guildId, botMember) {
     return 'Roles with Administrator, Manage Server, or Manage Roles are not eligible.';
   }
   if (!botMember?.permissions?.has(PermissionFlagsBits.ManageRoles)) {
-    return 'Conquest needs Manage Roles in that server.';
+    return 'unitClan needs Manage Roles in that server.';
   }
 
   const botHighestPosition = botMember.roles?.highest?.position;
   if (typeof botHighestPosition !== 'number' || role.position >= botHighestPosition) {
-    return 'The role must be below Conquest’s highest role.';
+    return 'The role must be below unitClan’s highest role.';
   }
 
   return null;
@@ -95,7 +95,7 @@ async function auditEmergencyRoleGrant(guild, client, member, role) {
         .setDescription(
           `**Member:** ${member} (\`${member.id}\`)\n` +
           `**Role:** ${role.name} (\`${role.id}\`)\n` +
-          '**Requested by:** verified Conquest application owner via DM',
+          '**Requested by:** verified unitClan application owner via DM',
         )
         .setTimestamp();
       await channel.send({ embeds: [embed], allowedMentions: { parse: [] } });

@@ -20,7 +20,7 @@ module.exports = {
       .setColor('#5865F2')
       .setTitle('Server setup templates')
       .setDescription(`${choices}\n\nRun \`?serverbuild <name>\` or \`/serverbuild\` to add one. Existing channels and roles are left unchanged.`)
-      .setFooter({ text: `Conquest ${require('../../config.json').version}`, iconURL: client.user.displayAvatarURL() });
+      .setFooter({ text: `unitClan ${require('../../config.json').version}`, iconURL: client.user.displayAvatarURL() });
     if (typeof source.isChatInputCommand === 'function' && source.isChatInputCommand()) {
       return source.reply({ embeds: [embed] });
     }

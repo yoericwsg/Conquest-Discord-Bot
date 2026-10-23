@@ -192,7 +192,7 @@ async function createServerFromTemplate(guild, templateKey) {
         name: roleSpec.name,
         color: roleSpec.color,
         hoist: Boolean(roleSpec.hoist),
-        reason: `Conquest ${template.label} server template`,
+        reason: `unitClan ${template.label} server template`,
       });
       result.created.push(`@${role.name}`);
     } catch (error) {
@@ -214,7 +214,7 @@ async function createServerFromTemplate(guild, templateKey) {
         category = await guild.channels.create({
           name: categorySpec.name,
           type: ChannelType.GuildCategory,
-          reason: `Conquest ${template.label} server template`,
+          reason: `unitClan ${template.label} server template`,
         });
         result.created.push(`${category.name} category`);
       } catch (error) {
@@ -243,7 +243,7 @@ async function createServerFromTemplate(guild, templateKey) {
           name: channelName,
           type,
           parent: category.id,
-          reason: `Conquest ${template.label} server template`,
+          reason: `unitClan ${template.label} server template`,
         };
         if (channelSpec.topic) options.topic = channelSpec.topic;
         const channel = await guild.channels.create(options);

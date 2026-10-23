@@ -55,6 +55,6 @@ module.exports = {
       `💚  **Stability:**    ${stability}`,
     ];
 
-    await reply({ embeds: [panel(client, '🖥️  Conquest — Server Status', lines, color)] });
+    await reply({ embeds: [panel(client, '🖥️  unitClan — Server Status', lines, color)] });
   },
 };

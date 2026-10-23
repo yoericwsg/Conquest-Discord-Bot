@@ -12,10 +12,10 @@ const MODES = {
 
 module.exports = {
   name: 'antiraid',
-  description: 'View or set Conquest anti-raid sensitivity in owner/team DMs',
+  description: 'View or set unitClan anti-raid sensitivity in owner/team DMs',
   cooldown: 5,
   slash: { data: new SlashCommandBuilder()
-    .setName('antiraid').setDescription('View or set Conquest anti-raid sensitivity')
+    .setName('antiraid').setDescription('View or set unitClan anti-raid sensitivity')
     .setContexts(InteractionContextType.BotDM)
     .addStringOption(option => option.setName('mode').setDescription('Monitoring level').addChoices(
       ...Object.keys(MODES).map(value => ({ name: value, value })),
@@ -24,13 +24,13 @@ module.exports = {
     const isSlash = typeof source.isChatInputCommand === 'function' && source.isChatInputCommand();
     const actor = source.user ?? source.author;
     const reply = payload => isSlash ? source.reply(payload) : source.channel.send(payload);
-    if (source.guild) return reply({ content: 'Run this command in Conquest’s DMs.' });
+    if (source.guild) return reply({ content: 'Run this command in unitClan’s DMs.' });
     if (!await isApplicationOwner(client, actor.id))
-      return reply({ content: 'This command is restricted to the verified Conquest owner/team.' });
+      return reply({ content: 'This command is restricted to the verified unitClan owner/team.' });
     const requested = isSlash ? source.options.getString('mode') : String(args[0] ?? '').toLowerCase();
     if (!requested) {
       const current = security.getAntiRaidMode();
-      return reply({ embeds: [base(client).setTitle('🛡️ Conquest anti-raid').setDescription(
+      return reply({ embeds: [base(client).setTitle('🛡️ unitClan anti-raid').setDescription(
         `Current mode: **${current}**\n\n${Object.entries(MODES).map(([mode, description]) => `**${mode}** — ${description}`).join('\n\n')}`,
       )] });
     }

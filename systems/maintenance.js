@@ -114,7 +114,7 @@ async function restoreApplicationDescription(client) {
   }
 }
 
-function formatDowntimeEmbed(client, downtime, title = 'Conquest is temporarily down') {
+function formatDowntimeEmbed(client, downtime, title = 'unitClan is temporarily down') {
   const end = Math.floor(downtime.endAt / 1000);
   return base(client)
     .setColor('#FEE75C')

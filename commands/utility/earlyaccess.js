@@ -14,7 +14,7 @@ function renderList(client) {
       return `**${index + 1}. ${name}**\nID: \`${entry.guildId}\`${addedAt ? ` · Added <t:${addedAt}:R>` : ''}`;
     }).join('\n\n') + (entries.length > 20 ? `\n\n…and ${entries.length - 20} more. Use server IDs with remove to manage them.` : '')
     : 'No servers have been selected for the v4.6.2 early-access cohort yet.';
-  return base(client).setTitle('🧪 Conquest v4.6.2 early access')
+  return base(client).setTitle('🧪 unitClan v4.6.2 early access')
     .setDescription(description.slice(0, 4000))
     .setFooter({ text: `${entries.length} selected server${entries.length === 1 ? '' : 's'} · selection does not message or change servers` });
 }
@@ -30,7 +30,7 @@ module.exports = {
       .setDescription('Manage the v4.6.2 early-access server cohort (bot DMs only)')
       .setContexts(InteractionContextType.BotDM)
       .addSubcommand(subcommand => subcommand.setName('add').setDescription('Select a server for the test cohort')
-        .addStringOption(option => option.setName('server_id').setDescription('Server ID (Conquest must already be in it)').setRequired(true)))
+        .addStringOption(option => option.setName('server_id').setDescription('Server ID (unitClan must already be in it)').setRequired(true)))
       .addSubcommand(subcommand => subcommand.setName('remove').setDescription('Remove a server from the test cohort')
         .addStringOption(option => option.setName('server_id').setDescription('Server ID').setRequired(true)))
       .addSubcommand(subcommand => subcommand.setName('list').setDescription('List selected test servers')),
@@ -43,9 +43,9 @@ module.exports = {
       return isSlash ? source.reply(safePayload) : source.channel.send(safePayload);
     };
 
-    if (source.guild) return reply({ content: 'Run this command in Conquest’s DMs.' });
+    if (source.guild) return reply({ content: 'Run this command in unitClan’s DMs.' });
     if (!await isApplicationOwner(client, actor.id)) {
-      return reply({ content: 'This command is restricted to the verified Conquest application owner/team.' });
+      return reply({ content: 'This command is restricted to the verified unitClan application owner/team.' });
     }
 
     const action = isSlash ? source.options.getSubcommand() : String(args[0] ?? '').toLowerCase();
@@ -70,7 +70,7 @@ module.exports = {
     const guild = client.guilds.cache.get(guildId);
     if (!guild) {
       return reply({ embeds: [error(client, 'Server not found',
-        `Conquest is not currently in server \`${guildId}\`. Add Conquest to that server first, then select it here.`)] });
+        `unitClan is not currently in server \`${guildId}\`. Add unitClan to that server first, then select it here.`)] });
     }
     const result = earlyAccess.addEarlyAccessGuild(guild, actor);
     const safeName = String(guild.name).replace(/([\\`*_~|])/g, '\\$1').slice(0, 100);

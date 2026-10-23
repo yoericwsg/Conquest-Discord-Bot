@@ -6,7 +6,7 @@ module.exports = {
   description: 'Get the bot invite link',
   aliases: ['addbot', 'invitebot'],
   cooldown: 5,
-  slash: { data: new SlashCommandBuilder().setName('invite').setDescription('Get a least-privilege or feature-specific Conquest invite')
+  slash: { data: new SlashCommandBuilder().setName('invite').setDescription('Get a least-privilege or feature-specific unitClan invite')
     .addStringOption(option => option.setName('permissions').setDescription('Optional permission bundle').addChoices(
       { name: 'Core only (recommended)', value: 'core' },
       { name: 'Moderation', value: 'moderation' },
@@ -56,7 +56,7 @@ module.exports = {
     });
 
     await reply({
-      embeds: [panel(client, `🔗  Invite Conquest · ${preset}`, [
+      embeds: [panel(client, `🔗  Invite unitClan · ${preset}`, [
         `[**Click here to invite me**](${link})`,
         ``,
         preset === 'core'

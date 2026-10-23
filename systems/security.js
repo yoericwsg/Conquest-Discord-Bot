@@ -172,7 +172,7 @@ function handleMessage(message, client) {
 
   spamTracker.delete(key);
   if (!message.member.moderatable) return;
-  message.member.timeout(30_000, 'Conquest anti-spam: 7 messages in 5 seconds')
+  message.member.timeout(30_000, 'unitClan anti-spam: 7 messages in 5 seconds')
     .then(() => message.channel.send({
       embeds: [warning(client, 'Anti-spam timeout', `${message.author} was timed out for sending 7 messages in 5 seconds.`)],
       allowedMentions: { parse: [] },

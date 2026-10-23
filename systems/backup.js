@@ -67,7 +67,7 @@ async function restoreBackup(guild, filename) {
         permissions: BigInt(role.permissions),
         hoist: role.hoist,
         mentionable: role.mentionable,
-        reason: 'Conquest: backup restore',
+        reason: 'unitClan: backup restore',
       });
       results.roles++;
     } catch (e) {
@@ -82,7 +82,7 @@ async function restoreBackup(guild, filename) {
 
   for (const cat of cats) {
     try {
-      const created = await guild.channels.create({ name: cat.name, type: 4, reason: 'Conquest: backup restore' });
+      const created = await guild.channels.create({ name: cat.name, type: 4, reason: 'unitClan: backup restore' });
       catMap[cat.name] = created.id;
       results.channels++;
     } catch (e) { results.errors.push(`Category "${cat.name}": ${e.message}`); }
@@ -95,7 +95,7 @@ async function restoreBackup(guild, filename) {
         type: ch.type,
         topic: ch.topic,
         nsfw: ch.nsfw,
-        reason: 'Conquest: backup restore',
+        reason: 'unitClan: backup restore',
       };
       if (ch.parentName && catMap[ch.parentName]) opts.parent = catMap[ch.parentName];
       await guild.channels.create(opts);

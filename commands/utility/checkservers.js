@@ -4,21 +4,21 @@ const storage = require('../../utils/storage');
 
 module.exports = {
   name: 'checkservers',
-  description: 'Privately check Conquest server count and setup health',
+  description: 'Privately check unitClan server count and setup health',
   cooldown: 10,
   async execute(source, _args, client) {
     const actor = source.author;
-    if (source.guild) return source.reply('Run this command in Conquest’s DMs.');
+    if (source.guild) return source.reply('Run this command in unitClan’s DMs.');
     if (!await isApplicationOwner(client, actor.id))
-      return source.reply('This command is restricted to the verified Conquest owner/team.');
+      return source.reply('This command is restricted to the verified unitClan owner/team.');
 
     const guilds = [...client.guilds.cache.values()].sort((a, b) => a.name.localeCompare(b.name));
     const pages = [];
     for (let index = 0; index < guilds.length; index += 10) {
       const chunk = guilds.slice(index, index + 10);
       const embed = base(client)
-        .setTitle(`Conquest server health · ${guilds.length} servers`)
-        .setDescription(chunk.length ? 'Private team report. Invite links are only shown when configured by a server administrator.' : 'Conquest is not currently in any servers.');
+        .setTitle(`unitClan server health · ${guilds.length} servers`)
+        .setDescription(chunk.length ? 'Private team report. Invite links are only shown when configured by a server administrator.' : 'unitClan is not currently in any servers.');
       for (const guild of chunk) {
         const configs = storage.get('configs.json', guild.id, {});
         const botMember = guild.members.me;
@@ -32,7 +32,7 @@ module.exports = {
       }
       pages.push(embed);
     }
-    if (!pages.length) pages.push(base(client).setTitle('Conquest server health').setDescription('Conquest is not currently in any servers.'));
+    if (!pages.length) pages.push(base(client).setTitle('unitClan server health').setDescription('unitClan is not currently in any servers.'));
     for (let i = 0; i < pages.length; i++) {
       pages[i].setFooter({ text: `Page ${i + 1}/${pages.length} · Private team report` });
       await source.channel.send({ embeds: [pages[i]], allowedMentions: { parse: [] } });

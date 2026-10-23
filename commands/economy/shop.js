@@ -21,6 +21,6 @@ module.exports = {
 
     lines.push(`Use \`?buy <item_id>\` or \`/buy\` to purchase.`);
 
-    await reply({ embeds: [panel(client, `🛒  Conquest Shop`, lines)] });
+    await reply({ embeds: [panel(client, `🛒  unitClan Shop`, lines)] });
   },
 };

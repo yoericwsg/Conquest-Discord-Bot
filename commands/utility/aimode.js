@@ -39,7 +39,7 @@ module.exports = {
   slash: {
     data: new SlashCommandBuilder()
       .setName('aimode')
-      .setDescription('Control Conquest AI mode in this channel')
+      .setDescription('Control unitClan AI mode in this channel')
       .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
       .addSubcommand(s => s.setName('on').setDescription('Turn AI on (casual mode)'))
       .addSubcommand(s => s.setName('off').setDescription('Turn AI off'))

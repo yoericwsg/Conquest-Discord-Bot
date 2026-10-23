@@ -88,7 +88,7 @@ module.exports = {
           await channel.permissionOverwrites.edit(overwrite.targetId, {
             SendMessages: false,
             SendMessagesInThreads: false,
-          }, { reason: `Reversible Conquest lockdown by ${actor.tag ?? actor.username}` });
+          }, { reason: `Reversible unitClan lockdown by ${actor.tag ?? actor.username}` });
         } catch (error) {
           failures.push(`${channel.name}: ${error.message}`);
           break;

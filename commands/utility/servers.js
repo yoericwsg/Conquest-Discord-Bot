@@ -26,7 +26,7 @@ module.exports = {
             { name: '👥 Members',  value: `\`${members.toLocaleString('en-US')}\``, inline: true },
             { name: '💠 Shards',   value: `\`${client.ws.shards.size}\``,           inline: true },
           ],
-          `${SEP}\nConquest ${cfg.version} · serving ${count} server${count === 1 ? '' : 's'}`,
+          `${SEP}\nunitClan ${cfg.version} · serving ${count} server${count === 1 ? '' : 's'}`,
           client.user.displayAvatarURL({ size: 256 }),
           COLORS.purple,
         ),

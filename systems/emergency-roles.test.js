@@ -48,7 +48,7 @@ test('emergency role grants require bot permissions and a role below the bot', (
   );
   assert.match(
     validateEmergencyRole(makeRole({ position: 10 }), 'guild-1', makeBotMember()),
-    /below Conquest’s highest role/,
+    /below unitClan’s highest role/,
   );
   assert.equal(validateEmergencyRole(makeRole(), 'guild-1', makeBotMember()), null);
 });

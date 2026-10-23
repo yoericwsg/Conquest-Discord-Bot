@@ -134,7 +134,7 @@ module.exports = {
   async execute(source, args, client) {
     const userId = source.author.id;
     if (!await isApplicationOwner(client, userId)) {
-      return source.reply('This command is restricted to the verified Conquest application owner.');
+      return source.reply('This command is restricted to the verified unitClan application owner.');
     }
     if (source.guild) {
       return source.reply('For privacy, use `?bypassroleadd` in DMs.');

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+<rect width="1600" height="900" fill="#fafaf8"/>
+<path d="M0 120H1600M0 780H1600" stroke="#3778f6" stroke-width="18"/>
+<path d="M-100 800L900 -100" stroke="#e7efff" stroke-width="110"/>
+<path d="M900 100L1650 850" stroke="#f0f4fb" stroke-width="90"/>
+<text x="800" y="520" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="198" font-weight="800" letter-spacing="-10" fill="#121418">unit<tspan fill="#3778f6">X</tspan></text>
+<text x="800" y="610" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="28" font-weight="600" letter-spacing="9" fill="#555b66">CLAN TOOLS · COMMUNITY · EVENTS</text>
+<circle cx="110" cy="120" r="14" fill="#121418"/><circle cx="1490" cy="780" r="14" fill="#121418"/>
+</svg>

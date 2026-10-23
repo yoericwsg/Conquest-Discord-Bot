@@ -42,7 +42,7 @@ async function pasteChannel(guild, chData) {
   const options = {
     name:                 chData.name,
     type:                 chData.channelType,
-    reason:               'Conquest ?paste',
+    reason:               'unitClan ?paste',
     permissionOverwrites: resolveOverwrites(chData.overwrites, guild),
   };
 
@@ -97,7 +97,7 @@ async function applyServerSnap(guild, snap) {
         hoist:       rData.hoist,
         mentionable: rData.mentionable,
         permissions: BigInt(rData.permissions),
-        reason:      'Conquest ?paste',
+        reason:      'unitClan ?paste',
       });
       counts.roles++;
     } catch (e) {
@@ -119,7 +119,7 @@ async function applyServerSnap(guild, snap) {
         name:                 catData.name,
         type:                 ChannelType.GuildCategory,
         permissionOverwrites: resolveOverwrites(catData.overwrites, guild),
-        reason:               'Conquest ?paste',
+        reason:               'unitClan ?paste',
       });
       counts.categories++;
     } catch (e) {

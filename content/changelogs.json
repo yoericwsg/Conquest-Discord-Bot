@@ -3,10 +3,10 @@
     "version": "4.6.2 Early Access",
     "date": "2026-10-16",
     "notes": [
-      "+ Introduced an owner/team-managed early-access cohort for selected Conquest test servers.",
+      "+ Introduced an owner/team-managed early-access cohort for selected unitClan test servers.",
       "+ Added ?installembedemoji and /installembedemoji to install six clean, reusable embed emojis in a server.",
       "+ Added an optional full embed-icon pack with 96 additional themed symbols; installation respects each server's available emoji slots.",
-      "~ Improved custom embeds with consistent Conquest branding, timestamps, title emoji styling, and clearer input validation.",
+      "~ Improved custom embeds with consistent unitClan branding, timestamps, title emoji styling, and clearer input validation.",
       "+ Added the owner/team-only /changelogs command in bot DMs, alongside its prefix form.",
       "~ Made runtime JSON updates atomic and preserve a recovery copy when a data file is malformed.",
       "- Prevented command aliases from silently overriding another command; ?flip now consistently flips a coin and ?reversetext reverses text.",

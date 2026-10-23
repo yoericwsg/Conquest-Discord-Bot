@@ -45,7 +45,7 @@ module.exports = {
         for (const overwrite of overwrites) {
           try {
             await channel.permissionOverwrites.edit(overwrite.targetId, overwrite.permissions, {
-              reason: `Conquest lockdown lifted by ${actor.tag ?? actor.username}`,
+              reason: `unitClan lockdown lifted by ${actor.tag ?? actor.username}`,
             });
           } catch (error) {
             console.error(`[LOCKDOWN RESTORE] ${guild.id}/${saved.channelId}: ${error.message}`);

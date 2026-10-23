@@ -12,10 +12,10 @@ function formatUptime(ms) {
 
 module.exports = {
   name: 'botinfo',
-  description: 'Display information about Conquest',
+  description: 'Display information about unitClan',
   aliases: ['about', 'bi'],
   cooldown: 10,
-  slash: { data: new SlashCommandBuilder().setName('botinfo').setDescription('Display information about Conquest') },
+  slash: { data: new SlashCommandBuilder().setName('botinfo').setDescription('Display information about unitClan') },
   async execute(source, args, client) {
     const isSlash = typeof source.isChatInputCommand === 'function' && source.isChatInputCommand();
     const reply   = async opts => isSlash ? source.reply(opts) : source.channel.send(opts);
@@ -24,7 +24,7 @@ module.exports = {
 
     await reply({
       embeds: [
-        panel(client, `🤖  Conquest ${cfg.version}`, [
+        panel(client, `🤖  unitClan ${cfg.version}`, [
           `📛  **Name:**         ${client.user.tag}`,
           `🏷️  **Version:**      ${cfg.version}`,
           `🛠️  **discord.js:**   v${djsVersion}`,

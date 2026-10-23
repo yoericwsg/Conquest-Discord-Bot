@@ -78,7 +78,7 @@ module.exports = {
       .setTitle('✅  Verification')
       .setDescription(verifyMsg)
       .setThumbnail(source.guild.iconURL({ size: 256 }))
-      .setFooter({ text: `Conquest ${cfg.version}`, iconURL: client.user.displayAvatarURL() })
+      .setFooter({ text: `unitClan ${cfg.version}`, iconURL: client.user.displayAvatarURL() })
       .setTimestamp();
 
     const row = new ActionRowBuilder().addComponents(

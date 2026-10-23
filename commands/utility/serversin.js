@@ -20,11 +20,11 @@ function renderPage(client, entries, page) {
   const pageCount = Math.max(1, Math.ceil(entries.length / PAGE_SIZE));
   const visible = entries.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
   const embed = base(client)
-    .setTitle('Conquest server directory')
+    .setTitle('unitClan server directory')
     .setDescription(
       entries.length
-        ? `Conquest is in **${entries.length}** server${entries.length === 1 ? '' : 's'}. Links appear only when a server admin has approved one.`
-        : 'Conquest is not in any servers yet.',
+        ? `unitClan is in **${entries.length}** server${entries.length === 1 ? '' : 's'}. Links appear only when a server admin has approved one.`
+        : 'unitClan is not in any servers yet.',
     );
 
   if (visible.length) {
@@ -62,12 +62,12 @@ function renderPage(client, entries, page) {
 
 module.exports = {
   name: 'serversin',
-  description: 'Privately list the servers Conquest is in',
+  description: 'Privately list the servers unitClan is in',
   cooldown: 10,
   async execute(source, _args, client) {
     const user = source.author;
     if (!await isApplicationOwner(client, user.id)) {
-      return source.reply('This command is restricted to the Conquest application owner.');
+      return source.reply('This command is restricted to the unitClan application owner.');
     }
     if (source.guild) {
       return source.reply('For privacy, run `?serversin` in DMs.');

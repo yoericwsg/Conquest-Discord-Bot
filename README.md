@@ -1,6 +1,6 @@
 <div align="center">
 
-# Conquest
+# unitClan
 
 ### Discord moderation and community management bot
 
@@ -13,7 +13,9 @@
 
 </div>
 
-Conquest is an independent community project. This repository is the **public source snapshot**: you can inspect it, fork it, modify it, and run your own separate bot instance under the MIT license. Cloning this repository does **not** give you access to Conquest's hosted bot, its Discord account, private team tools, production credentials, live server/user data, hosting configuration, or backups. A self-hosted copy is your own deployment and must use a bot application and token that you control.
+unitClan is an independent community project. This repository is the **public source snapshot**: you can inspect it, fork it, modify it, and run your own separate bot instance under the MIT license. Cloning this repository does **not** give you access to unitClan's hosted bot, its Discord account, private team tools, production credentials, live server/user data, hosting configuration, or backups. A self-hosted copy is your own deployment and must use a bot application and token that you control.
+
+The name and visual identity are **unitClan**. Matching profile and banner assets are in [`assets/`](assets/): `unitclan-avatar.svg` and `unitclan-banner.svg`. Upload them in the Discord Developer Portal when changing the application artwork.
 
 > **v4.6.2 is in early-access testing.** The DM-only `?earlyaccess` command records selected test servers for the team. Adding a server does not message or change it. Experimental features must explicitly check the early-access registry before they affect a server.
 
@@ -48,13 +50,13 @@ In **Bot → Privileged Gateway Intents**, enable **Server Members Intent** for 
 
 ### 3. Download the source and install dependencies
 
-You can **clone** the repository to make a local working copy, or use GitHub's **Fork** button to create your own GitHub copy. A fork tracks your changes separately; it does not connect to or control the official Conquest bot.
+You can **clone** the repository to make a local working copy, or use GitHub's **Fork** button to create your own GitHub copy. A fork tracks your changes separately; it does not connect to or control the official unitClan bot.
 
 Install [Git](https://git-scm.com/downloads) and [Node.js 22 or newer](https://nodejs.org/) first. Then run:
 
 ```sh
-git clone https://github.com/yoericwsg/Conquest-Discord-Bot.git
-cd Conquest-Discord-Bot
+git clone https://github.com/yoericwsg/unitClan-Discord-Bot.git
+cd unitClan-Discord-Bot
 npm install
 ```
 
@@ -73,13 +75,13 @@ cp .env.example .env
 
 Set `DISCORD_TOKEN` to the token for **your own** Discord bot application. `GROQ_API_KEY` is optional and only needed for Groq-backed AI features. Set `SESSION_SECRET` to a long, randomly generated private value if you use features that rely on it. Never paste secrets into issues, commits, screenshots, or chat. `.env` is excluded by `.gitignore`; `.env.example` is safe to commit because its values are placeholders.
 
-### 4. Start Conquest
+### 4. Start unitClan
 
 ```sh
 npm start
 ```
 
-At startup, Conquest loads prefix and slash commands and registers slash commands globally. Discord can take a little while to show new global commands.
+At startup, unitClan loads prefix and slash commands and registers slash commands globally. Discord can take a little while to show new global commands.
 
 ### 5. Deploy with Bot-Hosting
 
@@ -99,9 +101,9 @@ Create an OAuth2 URL in the Developer Portal with the `bot` and `applications.co
 
 ### 7. Configure a server
 
-Invite Conquest, then use `?help` to browse commands. An administrator can configure logging with `?setlog #mod-log`, set welcome options, create a ticket panel, list templates with `?templates`, apply a starter layout with `?serverbuild community` (or `gaming`, `study`, `creator`), and set up verification with `?setverify #verify @Member`. Disable the panel configuration with `?verifyoff`; existing verification messages stay in the channel. The bot needs the corresponding channel/role permissions for each feature. Review Discord's invite screen and grant additional permissions only when you enable those features.
+Invite unitClan, then use `?help` to browse commands. An administrator can configure logging with `?setlog #mod-log`, set welcome options, create a ticket panel, list templates with `?templates`, apply a starter layout with `?serverbuild community` (or `gaming`, `study`, `creator`), and set up verification with `?setverify #verify @Member`. Disable the panel configuration with `?verifyoff`; existing verification messages stay in the channel. The bot needs the corresponding channel/role permissions for each feature. Review Discord's invite screen and grant additional permissions only when you enable those features.
 
-For server-local embed styling, an administrator with **Manage Expressions** can run `?installembedemoji` or `/installembedemoji`. The core pack adds six Conquest emojis without replacing or deleting existing emojis. For the full **102-symbol** set, run `?installembedemoji full` or use `/installembedemoji` with **full: true**. The full pack includes themed moderation, safety, server, utility, community, support, status, and economy icons. Discord limits how many custom emojis each server can store, so the command installs what fits, reports the result, and stops when the server reaches its limit. The bot also needs **Create Expressions** or **Manage Expressions**. Custom embeds include Conquest branding and a timestamp; use the server emoji picker to insert installed icons into titles or descriptions.
+For server-local embed styling, an administrator with **Manage Expressions** can run `?installembedemoji` or `/installembedemoji`. The core pack adds six unitClan emojis without replacing or deleting existing emojis. For the full **102-symbol** set, run `?installembedemoji full` or use `/installembedemoji` with **full: true**. The full pack includes themed moderation, safety, server, utility, community, support, status, and economy icons. Discord limits how many custom emojis each server can store, so the command installs what fits, reports the result, and stops when the server reaches its limit. The bot also needs **Create Expressions** or **Manage Expressions**. Custom embeds include unitClan branding and a timestamp; use the server emoji picker to insert installed icons into titles or descriptions.
 
 ### 8. First-run checklist
 
@@ -140,7 +142,7 @@ Install dependencies with `npm install`, then run the project test suite with:
 npm test
 ```
 
-Review the source and the current [release notes](CHANGELOG.md) before enabling features in a production server. The public source snapshot can differ from the separately hosted Conquest service; do not assume a feature is active in the official bot just because it exists in this repository.
+Review the source and the current [release notes](CHANGELOG.md) before enabling features in a production server. The public source snapshot can differ from the separately hosted unitClan service; do not assume a feature is active in the official bot just because it exists in this repository.
 
 ## Add selected features to another Discord bot
 
@@ -149,7 +151,7 @@ This repository is a complete Discord application, not an npm plugin. You can st
 1. Copy the command file and the `systems/` or `utils/` modules it imports.
 2. Install the dependencies used by that feature. Most features use `discord.js`; image embeds use `sharp`; `groq-sdk` is only needed for the optional AI integration.
 3. Register the command with your bot's prefix and slash-command loaders.
-4. Copy the configuration keys and storage paths that the feature expects. Do not copy Conquest's `.env` or runtime `data/` files.
+4. Copy the configuration keys and storage paths that the feature expects. Do not copy unitClan's `.env` or runtime `data/` files.
 5. Enable the Discord intents and permissions listed in the command's source, then test in a disposable server.
 6. Keep the MIT license and copyright notice, and label your deployment as an independent fork if you publish it.
 
@@ -158,7 +160,7 @@ This repository is a complete Discord application, not an npm plugin. You can st
 - **You can:** read and audit the files published here, fork the repository, make changes, run a separate instance, and redistribute it under the [MIT license](LICENSE), while following that license and applicable law.
 - **You do not receive:** the official bot's token, access to the official bot account, team authorization, hosted runtime, production configuration, private records, or a guarantee that every public-source feature is deployed on the official service.
 - **You are responsible for your copy:** create and secure your own Discord application, configure permissions and intents, protect your secrets, review data handling, and keep dependencies and code updated.
-- **Branding and identity:** the MIT license covers the code, not ownership of the Conquest name, logos, artwork, or the official Discord bot identity. Do not impersonate the official service or imply endorsement. Clearly label modified deployments as independent forks.
+- **Branding and identity:** the MIT license covers the code, not ownership of the unitClan name, logos, artwork, or the official Discord bot identity. Do not impersonate the official service or imply endorsement. Clearly label modified deployments as independent forks.
 - **Public vs private:** this repository is the material intentionally published for inspection and reuse. Production secrets, live server data, backups, and hosting credentials are not part of it. Do not commit runtime `data/`, logs, backups, `.env`, or tokens.
 
 ## Repository layout
@@ -193,9 +195,9 @@ If you have made local changes, commit or back them up before pulling, then merg
 
 **Can I run the code without operating a Discord bot?** Yes. You can read and modify the source without creating an application. To connect it to Discord, you need a bot application and token that you control.
 
-**Does cloning this repo add my server to the official Conquest bot?** No. It creates a copy of the source. Your server joins an instance only when you invite that instance's bot account.
+**Does cloning this repo add my server to the official unitClan bot?** No. It creates a copy of the source. Your server joins an instance only when you invite that instance's bot account.
 
-**Can I publish a modified copy?** The source is MIT licensed. Preserve the license and copyright notice, make clear that your deployment is an independent fork, and do not publish credentials or private data. The license does not grant rights to Conquest branding or Discord account access.
+**Can I publish a modified copy?** The source is MIT licensed. Preserve the license and copyright notice, make clear that your deployment is an independent fork, and do not publish credentials or private data. The license does not grant rights to unitClan branding or Discord account access.
 
 **Where do I report a bug or security issue?** Use GitHub Issues for ordinary reproducible bugs and feature requests. Follow [SECURITY.md](SECURITY.md) to report vulnerabilities privately; do not post exploit details or secrets publicly.
 
@@ -210,7 +212,7 @@ Anti-raid monitoring is enabled in **medium** mode by default. The application o
 | `medium` | 5 joins in 5 seconds | Alert only |
 | `high` | 3 joins in 5 seconds | Temporarily raises server verification for 10 minutes when the bot has Manage Server; then restores the prior level |
 
-Conquest also alerts on bursts of channel or role deletions. These alerts are for staff visibility; they do not automatically ban users or rebuild deleted channels. The anti-spam system times out a regular member for 30 seconds after 7 messages in 5 seconds; administrators and members with Manage Messages are excluded. Alerts go to the configured log channel, or the server's system channel when no log channel is set.
+unitClan also alerts on bursts of channel or role deletions. These alerts are for staff visibility; they do not automatically ban users or rebuild deleted channels. The anti-spam system times out a regular member for 30 seconds after 7 messages in 5 seconds; administrators and members with Manage Messages are excluded. Alerts go to the configured log channel, or the server's system channel when no log channel is set.
 
 For an incident, server administrators can run `?lockdown <reason>` and then `?lockdown confirm`. Lockdown preserves channels and messages, temporarily restricts member sending, and can be reversed with `?cancellockdown`.
 
@@ -224,7 +226,7 @@ The application owner/team can manage the test-server list in a direct message w
 ?earlyaccess remove 123456789012345678
 ```
 
-Conquest must already be in the selected server. This records the server for the test cohort; it does not send an announcement, change server settings, or automatically enable experimental features. Any v4.6.2 experiment should check the early-access registry before running.
+unitClan must already be in the selected server. This records the server for the test cohort; it does not send an announcement, change server settings, or automatically enable experimental features. Any v4.6.2 experiment should check the early-access registry before running.
 
 ## Common commands
 
@@ -237,6 +239,8 @@ Conquest must already be in the selected server. This records the server for the
 | `?templates` | List the available community, gaming, study, and creator layouts |
 | `?setverify #channel @role [message]` / `/setverify` | Post a button that gives a member role after verification |
 | `?verifyoff` / `/verifyoff` | Remove the saved verification configuration without deleting its message |
+| `?raidstart <roblox_username> [ping] [server_link]` / `/raidstart` | Post a clan raid callout with a validated Roblox profile and optional game/private-server link |
+| `?raidend` / `/raidend` | Close the active clan raid callout in the server |
 | `?ticketpanel [#channel]` | Post a support panel |
 | `?invite [core\|moderation\|setup\|full]` | Generate an invite; review any extra permissions before approving |
 | `?checkservers` | Owner/team DM: inspect bot server membership and announcement setup |
@@ -247,11 +251,13 @@ Conquest must already be in the selected server. This records the server for the
 
 Commands with cross-server reach are restricted to the verified application owner/team and run in bot DMs. Server moderation and configuration commands also check Discord permissions.
 
+`raidstart` checks the Roblox username through the public Roblox user endpoint. A raid post can include a Roblox game or private-server URL and an optional `ping` flag for `@here`. The command does not create a private server or join Roblox for members; a server owner must provide the link.
+
 The release-note embed marks additions with **+**, improvements with **~**, and fixes with **−**.
 
 ## Intents, integrations, and data
 
-Conquest stores runtime settings and feature records under `data/` on the host. Depending on the features enabled, records may include server configuration, AFK state, leveling/economy progress, warnings, custom commands, moderation/security settings, and recovery copies of malformed records. Snipe/edit-snipe message details are held in process memory. Never publish the contents of `data/`.
+unitClan stores runtime settings and feature records under `data/` on the host. Depending on the features enabled, records may include server configuration, AFK state, leveling/economy progress, warnings, custom commands, moderation/security settings, and recovery copies of malformed records. Snipe/edit-snipe message details are held in process memory. Never publish the contents of `data/`.
 
 AI is optional. If you enable it, relevant message text and supported image input may be sent to the configured provider to generate a response. Review that provider's current terms and privacy settings before enabling it. The bot remains usable with AI disabled.
 
@@ -263,7 +269,7 @@ Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before openin
 
 ## License
 
-Conquest is released under the [MIT License](LICENSE). It is an independent project and is not endorsed by Discord.
+unitClan is released under the [MIT License](LICENSE). It is an independent project and is not endorsed by Discord.
 
 
 

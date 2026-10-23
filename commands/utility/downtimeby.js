@@ -18,9 +18,9 @@ module.exports = {
     const isSlash = typeof source.isChatInputCommand === 'function' && source.isChatInputCommand();
     const actor = source.user ?? source.author;
     const reply = payload => isSlash ? source.reply(payload) : source.channel.send(payload);
-    if (source.guild) return reply({ content: 'Run this command in Conquest’s DMs.' });
+    if (source.guild) return reply({ content: 'Run this command in unitClan’s DMs.' });
     if (!await isApplicationOwner(client, actor.id)) {
-      return reply({ content: 'This command is restricted to the verified Conquest application owner/team.' });
+      return reply({ content: 'This command is restricted to the verified unitClan application owner/team.' });
     }
 
     const label = (isSlash ? source.options.getString('rank') : args.join(' ')).trim();

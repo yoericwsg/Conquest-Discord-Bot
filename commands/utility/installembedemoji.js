@@ -2,7 +2,7 @@ const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const sharp = require('sharp');
 const { panel, resolveEmoji } = require('../../utils/embed');
 
-const INSTALL_REASON = 'Install Conquest embed emoji set';
+const INSTALL_REASON = 'Install unitClan embed emoji set';
 const PERMISSION = PermissionFlagsBits.CreateGuildExpressions | PermissionFlagsBits.ManageGuildExpressions;
 const CORE_ICONS = [
   { name: 'cq_ok', color: '#57F287', path: '<path d="m31 66 22 22 45-48" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>' },
@@ -58,13 +58,13 @@ function iconPng(icon) {
 
 module.exports = {
   name: 'installembedemoji',
-  description: 'Install Conquest embed emoji packs in this server',
+  description: 'Install unitClan embed emoji packs in this server',
   aliases: ['embedemojis'],
   cooldown: 60,
   slash: {
     data: new SlashCommandBuilder()
       .setName('installembedemoji')
-      .setDescription('Install Conquest embed emoji packs in this server')
+      .setDescription('Install unitClan embed emoji packs in this server')
       .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuildExpressions)
       .addBooleanOption(option => option.setName('full').setDescription('Install the full pack of up to 102 symbols').setRequired(false)),
   },
@@ -127,7 +127,7 @@ module.exports = {
     lines.push(fullPack
       ? `Requested **${icons.length} symbols**. The installer adds what this server has room for. Use names like \`cq_mod_ban\`, \`cq_safe_raid\`, and \`cq_server_welcome\` in embed titles and messages.`
       : 'Use `?embed` or `/embed` to make a custom embed. To install the larger set of up to 102 symbols, run `?installembedemoji full` or use `/installembedemoji` with **full: true**. Discord emoji slots are limited, so the full pack may install partially.');
-    const embed = panel(client, fullPack ? '✨ Conquest Embed Emoji Studio · Full Pack' : '✨ Conquest Embed Emoji Studio · Core Pack', lines.join('\n\n'));
+    const embed = panel(client, fullPack ? '✨ unitClan Embed Emoji Studio · Full Pack' : '✨ unitClan Embed Emoji Studio · Core Pack', lines.join('\n\n'));
     return reply({ embeds: [embed], allowedMentions: { parse: [] } });
   },
 };

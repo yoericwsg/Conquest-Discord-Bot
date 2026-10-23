@@ -88,7 +88,7 @@ module.exports = {
       }
       setEmergencyRoleIds(guild.id, ids);
       return source.channel.send({
-        embeds: [success(client, 'Emergency role approved', `${roles.map(role => `${role}`).join(', ')} can now be requested by the verified Conquest application owner in DMs.`)],
+        embeds: [success(client, 'Emergency role approved', `${roles.map(role => `${role}`).join(', ')} can now be requested by the verified unitClan application owner in DMs.`)],
       });
     }
 

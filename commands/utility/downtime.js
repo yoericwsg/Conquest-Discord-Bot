@@ -31,17 +31,17 @@ function makeMaintenance(client, actor, reason, durationMs) {
 
 module.exports = {
   name: 'downtime',
-  description: 'Set or check Conquest maintenance from owner DMs',
+  description: 'Set or check unitClan maintenance from owner DMs',
   aliases: ['down'],
   cooldown: 5,
   slash: {
     data: new SlashCommandBuilder()
       .setName('downtime')
-      .setDescription('Set or check Conquest maintenance (bot DMs only)')
+      .setDescription('Set or check unitClan maintenance (bot DMs only)')
       .setContexts(InteractionContextType.BotDM)
       .addSubcommand(s => s.setName('set').setDescription('Pause AI and bot commands for a reason and duration')
         .addStringOption(o => o.setName('duration').setDescription('Examples: 30sec, 1hr, 2days, 3months').setRequired(true))
-        .addStringOption(o => o.setName('reason').setDescription('Why Conquest is going down').setMaxLength(500).setRequired(true)))
+        .addStringOption(o => o.setName('reason').setDescription('Why unitClan is going down').setMaxLength(500).setRequired(true)))
       .addSubcommand(s => s.setName('status').setDescription('Show the current maintenance status'))
       .addSubcommand(s => s.setName('cancel').setDescription('End maintenance early and restore normal status')),
   },
@@ -50,9 +50,9 @@ module.exports = {
     const isSlash = typeof source.isChatInputCommand === 'function' && source.isChatInputCommand();
     const actor = source.user ?? source.author;
     const reply = payload => isSlash ? source.reply(payload) : source.channel.send(payload);
-    if (source.guild) return reply({ content: 'Run this command in Conquest’s DMs.' });
+    if (source.guild) return reply({ content: 'Run this command in unitClan’s DMs.' });
     if (!await isApplicationOwner(client, actor.id)) {
-      return reply({ content: 'This command is restricted to the verified Conquest application owner/team.' });
+      return reply({ content: 'This command is restricted to the verified unitClan application owner/team.' });
     }
 
     let action = isSlash ? source.options.getSubcommand() : String(args[0] ?? '').toLowerCase();
@@ -76,15 +76,15 @@ module.exports = {
         const descriptionRestored = await restoreApplicationDescription(client);
         syncPresence(client);
         return reply({ embeds: [info(client, 'No active downtime', [],
-          descriptionRestored ? 'Conquest is already marked online.' : 'Conquest is online, but Discord did not allow its application description to be restored. Check the Developer Portal.')] });
+          descriptionRestored ? 'unitClan is already marked online.' : 'unitClan is online, but Discord did not allow its application description to be restored. Check the Developer Portal.')] });
       }
       const descriptionRestored = await restoreApplicationDescription(client);
       syncPresence(client);
       const embed = base(client)
         .setColor('#57F287')
-        .setTitle('✅  Conquest is back online')
+        .setTitle('✅  unitClan is back online')
         .setDescription(`Maintenance ended early.\n**Reason:** ${previous.reason}`);
-      const results = await broadcastEmbed(client, embed, '✅ Conquest is back online.');
+      const results = await broadcastEmbed(client, embed, '✅ unitClan is back online.');
       if (!descriptionRestored) embed.addFields({ name: 'Profile description', value: 'Discord did not allow the description to be restored automatically. Check the Developer Portal.' });
       embed.setFooter({ text: `Sent to ${results.filter(result => result.sent).length} server(s); mentions disabled.` });
       return reply({ embeds: [embed] });
@@ -92,7 +92,7 @@ module.exports = {
 
     if (action === 'status') {
       const active = getActiveDowntime();
-      if (!active) return reply({ embeds: [info(client, 'Conquest status', [], 'No active downtime. Use `?downtime 1hr fixing something` to start a maintenance window.')] });
+      if (!active) return reply({ embeds: [info(client, 'unitClan status', [], 'No active downtime. Use `?downtime 1hr fixing something` to start a maintenance window.')] });
       return reply({ embeds: [formatDowntimeEmbed(client, active)] });
     }
 
@@ -108,15 +108,15 @@ module.exports = {
 
     const embed = formatDowntimeEmbed(client, downtime);
     const timestamp = Math.floor(downtime.endAt / 1000);
-    const content = `🛠️ **Conquest is temporarily down.** ${downtime.reason} Expected back <t:${timestamp}:R>. Started by ${downtime.rankLabel} · ${downtime.startedByTag}.`;
+    const content = `🛠️ **unitClan is temporarily down.** ${downtime.reason} Expected back <t:${timestamp}:R>. Started by ${downtime.rankLabel} · ${downtime.startedByTag}.`;
     const results = await broadcastEmbed(client, embed, content);
     scheduleDowntimeExpiry(client, async expired => {
       await restoreApplicationDescription(client);
       const onlineEmbed = base(client)
         .setColor('#57F287')
-        .setTitle('✅  Conquest is back online')
+        .setTitle('✅  unitClan is back online')
         .setDescription(`The maintenance window has ended.\n**Reason:** ${expired.reason}\n**Started by:** ${expired.rankLabel} · ${expired.startedByTag}`);
-      await broadcastEmbed(client, onlineEmbed, '✅ Conquest maintenance has ended. The bot is back online.');
+      await broadcastEmbed(client, onlineEmbed, '✅ unitClan maintenance has ended. The bot is back online.');
     });
 
     const sent = results.filter(result => result.sent).length;

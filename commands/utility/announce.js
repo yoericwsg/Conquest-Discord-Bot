@@ -63,7 +63,7 @@ module.exports = {
       if (!targets.length || targets.length !== requested)
         return reply({ content: 'No servers matched. Use `?announce servers` to list their IDs.' });
       const reason = args.slice(1).join(' ').trim().slice(0, 1500);
-      const embed = panel(client, '📢  Conquest Announcement', reason, COLORS.blue)
+      const embed = panel(client, '📢  unitClan Announcement', reason, COLORS.blue)
         .setFooter({ text: `Announced by ${actor.tag ?? actor.username}` }).setTimestamp();
       const results = await broadcastEmbed(client, embed, `📢 **Announcement**\n${reason}`, targets);
       const sent = results.filter(r => r.sent).length;

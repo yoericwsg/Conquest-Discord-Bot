@@ -4,7 +4,7 @@ const cfg = require('../config.json');
 const guildContext = new AsyncLocalStorage();
 
 const SEP = '━━━━━━━━━━━━━━━━━━━━━━';
-const FOOTER = `Conquest ${cfg.version}`;
+const FOOTER = `${cfg.brandName ?? 'unitClan'} ${cfg.version}`;
 const COLORS = {
   purple: '#9B59B6', blue: '#5865F2', green: '#57F287', red: '#ED4245',
   yellow: '#FEE75C', pink: '#EB459E',

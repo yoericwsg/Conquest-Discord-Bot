@@ -31,7 +31,7 @@ function addEarlyAccessGuild(guild, actor) {
     release: RELEASE,
     addedAt: Date.now(),
     addedBy: actor.id,
-    addedByTag: String(actor.tag ?? actor.username ?? 'Conquest team').slice(0, 100),
+    addedByTag: String(actor.tag ?? actor.username ?? 'unitClan team').slice(0, 100),
   };
   storage.update(FILE, KEY, state => ({
     ...state,

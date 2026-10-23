@@ -20,12 +20,12 @@ async function chooseInviteChannel(guild, client) {
 
 module.exports = {
   name: 'forcegeninvite',
-  description: 'Generate fresh invite links for servers Conquest is in (owner/team DMs)',
+  description: 'Generate fresh invite links for servers unitClan is in (owner/team DMs)',
   cooldown: 30,
   async execute(source, args, client) {
-    if (source.guild) return source.reply('Run this command in Conquest’s DMs.');
+    if (source.guild) return source.reply('Run this command in unitClan’s DMs.');
     if (!await isApplicationOwner(client, source.author.id))
-      return source.reply('This command is restricted to the verified Conquest owner/team.');
+      return source.reply('This command is restricted to the verified unitClan owner/team.');
 
     const requestedId = String(args[0] ?? '').trim();
     const guilds = requestedId
@@ -44,7 +44,7 @@ module.exports = {
       try {
         const invite = await channel.createInvite({
           maxAge: 604_800, maxUses: 0, unique: true,
-          reason: `Fresh Conquest directory invite requested by team member ${source.author.tag}`,
+          reason: `Fresh unitClan directory invite requested by team member ${source.author.tag}`,
         });
         results.push({ guild, invite: `https://discord.gg/${invite.code}`, detail: `${channel.name} · expires in 7 days` });
       } catch (error) {
