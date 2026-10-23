@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const { success, error, info } = require('../../utils/embed');
 const storage = require('../../utils/storage');
-const { clearHistory } = require('../../systems/groq');
+const { clearHistory, getAiProvider } = require('../../systems/groq');
 
 const FILE = 'aimode.json';
 
@@ -54,6 +54,7 @@ module.exports = {
       .addSubcommand(s => s.setName('build').setDescription('Build Discord server layouts safely 🏗️'))
       .addSubcommand(s => s.setName('server').setDescription('Switch to server manager mode 🛠️'))
       .addSubcommand(s => s.setName('status').setDescription('Check current AI mode'))
+      .addSubcommand(s => s.setName('provider').setDescription('Show the configured AI provider'))
       .addSubcommand(s => s.setName('reset').setDescription('Clear conversation history')),
   },
 
@@ -123,6 +124,11 @@ module.exports = {
       return reply({ embeds: [success(client, '🧹 History Cleared', `Convo history for ${channelMention} wiped.`)] });
     }
 
+    if (sub === 'provider') {
+      const provider = getAiProvider();
+      return reply({ embeds: [info(client, '🧠 AI Provider', [], 'Configured provider: **' + (provider === 'mistral' ? 'Mistral' : 'Groq') + '**. Set MISTRAL_API_KEY in the bot host environment to use Mistral.')] });
+    }
+
     // status
     if (data.enabled) {
       const m = MODE_INFO[data.mode] ?? MODE_INFO.casual;
@@ -131,4 +137,6 @@ module.exports = {
     return reply({ embeds: [info(client, '🤖 AI Mode Status', [], `${channelMention}: **OFF**\nUse \`?aimodeon\` or \`?chillmode\`/\`?roastmode\`/\`?casualmode\` to enable.`)] });
   },
 };
+
+
 
