@@ -1,7 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
-<rect width="1024" height="1024" rx="220" fill="#fafaf8"/>
-<path d="M110 180H914M110 844H914" stroke="#3778f6" stroke-width="24"/>
-<path d="M180 780L850 110" stroke="#e7efff" stroke-width="42"/>
-<text x="512" y="585" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="182" font-weight="800" letter-spacing="-8" fill="#121418">unit<tspan fill="#3778f6">X</tspan></text>
-<circle cx="180" cy="180" r="18" fill="#121418"/><circle cx="844" cy="844" r="18" fill="#121418"/>
+  <rect width="1024" height="1024" rx="220" fill="#fff"/>
+  <rect x="44" y="44" width="936" height="936" rx="184" fill="none" stroke="#111318" stroke-width="18"/>
+  <circle cx="792" cy="232" r="92" fill="#eaf2ff"/>
+  <path d="M708 164h168M792 80v168" stroke="#377dff" stroke-width="14" stroke-linecap="round" opacity=".8"/>
+  <text x="512" y="624" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="318" font-weight="800" letter-spacing="-28" fill="#111318">uni</text>
+  <path d="M658 404l170 216M828 404L658 620" stroke="#377dff" stroke-width="58" stroke-linecap="round"/>
+  <circle cx="192" cy="820" r="12" fill="#377dff"/><circle cx="232" cy="820" r="12" fill="#111318"/><circle cx="272" cy="820" r="12" fill="#377dff"/>
 </svg>
+
