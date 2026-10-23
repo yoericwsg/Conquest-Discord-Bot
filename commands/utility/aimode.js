@@ -131,3 +131,4 @@ module.exports = {
     return reply({ embeds: [info(client, '🤖 AI Mode Status', [], `${channelMention}: **OFF**\nUse \`?aimodeon\` or \`?chillmode\`/\`?roastmode\`/\`?casualmode\` to enable.`)] });
   },
 };
+
