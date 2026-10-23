@@ -101,3 +101,4 @@ test('application owners and team members are recognized; others are not', async
   assert.equal(await isApplicationOwner(teamOwnerOnlyClient, 'owner-2'), true);
   assert.equal(await isApplicationOwner(teamOwnerOnlyClient, 'team-2'), false);
 });
+
