@@ -41,7 +41,7 @@ const MAX_HISTORY = 8; // keep low — each message costs tokens
 // Models — llama-3.1-8b-instant is Mistral's fastest model with the highest free-tier
 // rate limit, used for all chat modes. Smarter modes use the bigger model.
 const FAST_MODEL    = process.env.MISTRAL_FAST_MODEL || 'mistral-small-latest';
-const SMART_MODEL   = process.env.MISTRAL_SMART_MODEL || 'mistral-large-latest';
+const SMART_MODEL   = process.env.MISTRAL_SMART_MODEL || 'mistral-small-latest';
 const VISION_MODEL  = process.env.MISTRAL_VISION_MODEL || 'pixtral-12b-2409';
 
 function readableAiError(error) {
@@ -833,6 +833,7 @@ function clearHistory(channelId) {
 }
 
 module.exports = { chat, clearHistory, executeTool, getToolsForMode, getAiProvider, TOOLS };
+
 
 
 
