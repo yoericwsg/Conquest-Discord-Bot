@@ -860,3 +860,4 @@ function clearHistory(channelId) {
 }
 
 module.exports = { chat, clearHistory, executeTool, getToolsForMode, TOOLS };
+
