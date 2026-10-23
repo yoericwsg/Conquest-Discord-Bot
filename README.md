@@ -144,6 +144,10 @@ npm test
 
 Review the source and the current [release notes](CHANGELOG.md) before enabling features in a production server. The public source snapshot can differ from the separately hosted unitClan service; do not assume a feature is active in the official bot just because it exists in this repository.
 
+## AI provider setup
+
+AI mode supports Mistral directly. Set `MISTRAL_API_KEY` in the Bot-Hosting environment (from [console.mistral.ai](https://console.mistral.ai)) to use Mistral. Optional model variables are `MISTRAL_FAST_MODEL`, `MISTRAL_SMART_MODEL`, and `MISTRAL_VISION_MODEL`. When no Mistral key is present, unitClan falls back to Groq with `GROQ_API_KEY`. Use `?aimode provider` or `/aimode provider` to see the active provider.
+
 ## Add selected features to another Discord bot
 
 This repository is a complete Discord application, not an npm plugin. You can still reuse individual features in an existing bot:
