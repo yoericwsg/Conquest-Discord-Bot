@@ -96,3 +96,4 @@ module.exports = {
     return actor.send(result).catch(() => reply({ content: result }));
   },
 };
+
