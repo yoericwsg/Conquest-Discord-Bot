@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const { success, error, info } = require('../../utils/embed');
 const storage = require('../../utils/storage');
-const { clearHistory, getAiProvider } = require('../../systems/groq');
+const { clearHistory, getAiProvider } = require('../../systems/mistral');
 
 const FILE = 'aimode.json';
 
@@ -126,7 +126,7 @@ module.exports = {
 
     if (sub === 'provider') {
       const provider = getAiProvider();
-      return reply({ embeds: [info(client, '🧠 AI Provider', [], 'Configured provider: **' + (provider === 'mistral' ? 'Mistral' : 'Groq') + '**. Set MISTRAL_API_KEY in the bot host environment to use Mistral.')] });
+      return reply({ embeds: [info(client, '🧠 AI Provider', [], 'Configured provider: **' + ('Mistral') + '**. Set MISTRAL_API_KEY in the bot host environment to use Mistral.')] });
     }
 
     // status
@@ -137,6 +137,7 @@ module.exports = {
     return reply({ embeds: [info(client, '🤖 AI Mode Status', [], `${channelMention}: **OFF**\nUse \`?aimodeon\` or \`?chillmode\`/\`?roastmode\`/\`?casualmode\` to enable.`)] });
   },
 };
+
 
 
 
