@@ -258,7 +258,7 @@ client.on('messageCreate', async message => {
     if (!message.content.startsWith(dmPrefix)) return;
     const [rawCommand, ...args] = message.content.slice(dmPrefix.length).trim().split(/\s+/);
     const commandName = String(rawCommand ?? '').toLowerCase();
-    if (!['serversin', 'bypassroleadd', 'downtime', 'down', 'downtimeby', 'announce', 'ann', 'broadcast', 'checkservers', 'forcegeninvite', 'changelogs', 'changelog', 'release', 'antiraid', 'earlyaccess', 'earlyacsess'].includes(commandName)) return;
+    if (!['serversin', 'bypassroleadd', 'downtime', 'down', 'downtimeby', 'announce', 'ann', 'broadcast', 'checkservers', 'forcegeninvite', 'changelogs', 'changelog', 'release', 'antiraid', 'earlyaccess', 'earlyacsess', 'removecd', 'clearcd', 'resetcd'].includes(commandName)) return;
 
     const commandKey = client.aliases.get(commandName) ?? commandName;
     const command = client.prefixCommands.get(commandKey);
@@ -595,5 +595,7 @@ client.login(token).catch(error => {
   console.error(`\x1b[31m[FATAL]\x1b[0m Discord login failed: ${error.message}`);
   process.exitCode = 1;
 });
+
+
 
 
