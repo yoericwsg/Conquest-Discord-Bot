@@ -103,7 +103,7 @@ const logger   = require('./systems/logger');
 const security = require('./systems/security');
 const leveling = require('./systems/leveling');
 const tickets  = require('./systems/tickets');
-const groq     = require('./systems/groq');
+const mistral  = require('./systems/mistral');
 const { handleGiveawayButton } = require('./commands/utility/giveaway');
 
 // ─── Disabled command helper ──────────────────────────────────────────────────
@@ -327,7 +327,7 @@ client.on('messageCreate', async message => {
   const prefix = getPrefix(message.guild.id);
 
   // ── AI Mode ─────────────────────────────────────────────────────────────────
-  // If this channel has AI mode on, respond with Groq (skip if it's a command)
+  // If this channel has AI mode on, respond with Mistral (skip if it's a command)
   try {
     const aiData    = storage.get('aimode.json', message.channel.id, null);
     const aiEnabled = aiData === true || (aiData && aiData.enabled);
@@ -375,7 +375,7 @@ client.on('messageCreate', async message => {
 
       let replyText;
       try {
-        replyText = await groq.chat(
+        replyText = await mistral.chat(
           message.channel.id,
           message.content,
           displayName,
@@ -597,6 +597,7 @@ client.login(token).catch(error => {
   console.error(`\x1b[31m[FATAL]\x1b[0m Discord login failed: ${error.message}`);
   process.exitCode = 1;
 });
+
 
 
 
